@@ -19,8 +19,9 @@ First Person UI
 
 
 9PM Deadline
-* scrolling grid
 * move sub
+
+* scrolling grid
 * checks ui
 * response ui
 * hitting

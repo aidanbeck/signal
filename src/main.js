@@ -1,4 +1,5 @@
 import Theatre from '../easel/Theatre.js';
+import Velocity from '../easel/Velocity.js';
 
 import Ship from '../src/Ship.js';
 import renderScreen from '../src/renderScreen.js';
@@ -14,6 +15,11 @@ theatre.canvas.style.backgroundColor = "black"
 theatre.redraw = () => { renderScreen(theatre, ctx, ships, 5, 50) };
 
 // State
+const mouse = {
+    x: 0,
+    y: 0
+}
+
 const ships = [
     new Ship(0, 0, 3, 3, "rgba(0, 200, 0, 0.8)"),
     new Ship(50, 25, 3, 3, "rgba(200, 0, 0, 0.8)")
@@ -21,9 +27,45 @@ const ships = [
 
 // Interaction
 theatre.addEventListener("contextmenu", (e) => e.preventDefault());
+theatre.addEventListener("pointermove", mouseMove);
+theatre.addEventListener("pointerdown", onClick);
 
-// setInterval(renderShapes, 20);
+function mouseMove(event) {
+    let {x, y} = theatre.getEventCoordinates(event);
 
-renderScreen(theatre, ctx, ships, 5, 50);
+    mouse.x = x;
+    mouse.y = y;
+}
 
-globalThis.SHIP = ships; // expose as global variable for console testing
+function onClick(event) {
+    let {x, y} = theatre.getEventCoordinates(event);
+
+    //cetner around ship 0
+    x -= ships[0].x;
+    y -= ships[0].y;
+
+
+
+    let boost = new Velocity(x/5, y/5);
+    ships[0].v.addVelocity(boost);
+}
+
+
+function render() {
+    renderScreen(theatre, ctx, ships, mouse, 5, 50);
+    requestAnimationFrame(render);
+}
+
+function physics() {
+    for (let ship of ships) {
+        ship.v.moveObject(ship);
+        ship.v.applyFriction(0.8);
+    }
+
+}
+
+requestAnimationFrame(render);
+setInterval(physics, 20);
+
+
+globalThis.SHIPS = ships; // expose as global variable for console testing

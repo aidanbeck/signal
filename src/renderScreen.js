@@ -1,8 +1,21 @@
-export default function render(theatre, ctx, ships, dotRadius, lineSpacePixels) {
+export default function render(theatre, ctx, ships, mouse, dotRadius, lineSpacePixels) {
 
+    // ctx.shadowBlur = 15;
     clearCanvas(theatre, ctx);
     renderGrid(theatre, ctx, lineSpacePixels);
+    lineToMouse(ctx, ships, mouse);
     renderShips(ctx, ships, dotRadius);
+
+    
+}
+
+function lineToMouse(ctx, ships, mouse) {
+
+    ctx.strokeStyle = "white";
+    ctx.beginPath();
+    ctx.moveTo(ships[0].x, ships[0].y);
+    ctx.lineTo(mouse.x, mouse.y);
+    ctx.stroke();
 }
 
 function clearCanvas(theatre, ctx) {
@@ -11,7 +24,6 @@ function clearCanvas(theatre, ctx) {
 
 function renderShips(ctx, ships, radius) {
 
-    ctx.shadowBlur = 20; // Glow intensity
     ctx.shadowColor = "white"; // can make this other color, but rgba is rough.
     
 
@@ -27,7 +39,6 @@ function renderShips(ctx, ships, radius) {
 
 function renderGrid(theatre, ctx, lineSpacePixels) {
 
-    ctx.shadowBlur = 15;
     ctx.shadowColor = "rgb(40,70,70)"; // can make this other color, but rgba is rough.
 
     // horizontal lines
