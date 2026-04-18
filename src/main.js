@@ -46,7 +46,7 @@ function onClick(event) {
 
 
 
-    let boost = new Velocity(x/5, y/5);
+    let boost = new Velocity(x/10, y/10); // divide by 5 for friction 0.8, divide 10 for friction 0.9
     ships[0].v.addVelocity(boost);
 }
 
@@ -59,7 +59,7 @@ function render() {
 function physics() {
     for (let ship of ships) {
         ship.v.moveObject(ship);
-        ship.v.applyFriction(0.8);
+        ship.v.applyFriction(0.9);
     }
 
 }
