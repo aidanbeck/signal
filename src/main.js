@@ -22,7 +22,7 @@ const ships = [
 // Interaction
 theatre.addEventListener("contextmenu", (e) => e.preventDefault());
 
-setInterval(renderShapes, 20);
+// setInterval(renderShapes, 20);
 
 renderScreen(theatre, ctx, ships, 5, 50);
 

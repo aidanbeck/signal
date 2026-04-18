@@ -11,7 +11,12 @@ function clearCanvas(theatre, ctx) {
 
 function renderShips(ctx, ships, radius) {
 
+    ctx.shadowBlur = 20; // Glow intensity
+    ctx.shadowColor = "white"; // can make this other color, but rgba is rough.
+    
+
     for (let ship of ships) {
+        
         ctx.fillStyle = ship.color;
         ctx.beginPath();
         ctx.arc(ship.x, ship.y, radius, 0, Math.PI * 2);
@@ -21,6 +26,9 @@ function renderShips(ctx, ships, radius) {
 }
 
 function renderGrid(theatre, ctx, lineSpacePixels) {
+
+    ctx.shadowBlur = 15;
+    ctx.shadowColor = "rgb(40,70,70)"; // can make this other color, but rgba is rough.
 
     // horizontal lines
     ctx.strokeStyle = "rgb(40,70,70)";
