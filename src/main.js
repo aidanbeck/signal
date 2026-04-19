@@ -5,6 +5,22 @@ import {Circle} from '../easel/Shape.js';
 import Ship from '../src/Ship.js';
 import RadarScreen from '../src/RadarScreen.js';
 
+// Audio
+let trackStarted = false;
+const backgroundMusic = new Audio("./sound/background.m4a");
+const moveSound = new Audio("./sound/move.mp3");
+moveSound.volume = 0.05;
+const abilitySound = new Audio("./sound/notif.mp3");
+abilitySound.volume = 0.6;
+function startTrack() {
+    if (trackStarted) { return; }
+    
+    backgroundMusic.volume = 0.6;
+    backgroundMusic.loop = true;
+    backgroundMusic.play();
+    trackStarted = true;
+}
+
 
 // Theatre Setup
 const canvasElement = document.getElementById("theatre");
@@ -29,7 +45,10 @@ const mouse = { x: ships[0].x, y: ships[0].y }
 let abilityVisual = { text: ""};
 
 export function setAbilityVisual(visual) {
+    abilitySound.play();
+    abilitySound.currentTime = 0.4;
     Object.assign(abilityVisual, visual);
+    
 }
 
 // Radar Screen
@@ -72,6 +91,9 @@ function onClick(event) {
 
     mouse.x = x;
     mouse.y = y;
+    let newMoveSound = moveSound.cloneNode(); // !!! unoptomized
+    newMoveSound.volume = 0.05;
+    newMoveSound.play();
 
     //center around player (ship 0)
     x -= ships[0].x;
@@ -79,6 +101,8 @@ function onClick(event) {
 
     let boost = new Velocity(x/10, y/10); // divide by 5 for friction 0.8, divide 10 for friction 0.9
     ships[0].v.addVelocity(boost);
+
+    startTrack(); // !!! for audio
 }
 
 
@@ -88,7 +112,6 @@ function render() {
 }
 
 function physics() {
-    // start();
     for (let ship of ships) {
         ship.v.moveObject(ship);
         ship.v.applyFriction(0.9);
