@@ -24,7 +24,7 @@ First Person UI
 [x] scrolling grid
 [x] Grid styling (coordinates, size)
 
-[ ] ability functions
+[x] ability functions
 [ ] hitting functions
 
 * checks ui

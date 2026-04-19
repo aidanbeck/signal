@@ -56,4 +56,14 @@ export default class Ship {
     moveIsHot(sub) {
         // todo
     }
+
+    hit(gridX, gridY, lineSpacePixels) {
+
+        const myGridX = Math.floor(this.x / lineSpacePixels);
+        const myGridY = Math.floor(this.y / lineSpacePixels);
+
+        return gridX == myGridX && gridY == myGridY;
+        
+        
+    }
 }
