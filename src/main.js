@@ -2,29 +2,28 @@ import Theatre from '../easel/Theatre.js';
 import Velocity from '../easel/Velocity.js';
 
 import Ship from '../src/Ship.js';
-import renderScreen from '../src/renderScreen.js';
+import RadarScreen from '../src/RadarScreen.js';
+
 
 // Theatre Setup
 const canvasElement = document.getElementById("theatre");
 const theatre = new Theatre(canvasElement, 400, 400);
-const ctx = theatre.ctx;
 theatre.origin = "CENTER";
-// theatre.makeFullScreen();
 theatre.shorterDimensionConsistent = true;
 theatre.canvas.style.backgroundColor = "black"
-theatre.redraw = () => { renderScreen(theatre, ctx, ships, 5, 50) };
+theatre.redraw = () => {}; // canvas cannot resize, as it is a fixed resolution
 
-// State
-const mouse = {
-    x: 0,
-    y: 0
-}
+// Game State
+const mouse = { x: 0, y: 0 }
 
 const ships = [
-    new Ship(0, 0, 3, 3, "rgba(0, 200, 0, 0.8)"),
-    new Ship(310, 130, 3, 3, "rgba(200, 0, 0, 0.8)"),
-    new Ship(100, 100, 0, 0, "rgba(0, 0, 200, 0.8)"),
+    new Ship(0, 0, 5, "rgba(0, 200, 0, 0.8)"),
+    new Ship(310, 130, 5,"rgba(200, 0, 0, 0.8)"),
+    new Ship(120, 120, 3, "rgba(0, 0, 200, 0.8)"),
 ]
+
+// Radar Screen
+const radarScreen = new RadarScreen(theatre, ships, mouse);
 
 // Interaction
 theatre.addEventListener("contextmenu", (e) => e.preventDefault());
@@ -51,11 +50,9 @@ function mouseMove(event) {
 function onClick(event) {
     let {x, y} = getWorldCoordinates(event);
 
-    //cetner around ship 0
+    //center around player (ship 0)
     x -= ships[0].x;
     y -= ships[0].y;
-
-
 
     let boost = new Velocity(x/10, y/10); // divide by 5 for friction 0.8, divide 10 for friction 0.9
     ships[0].v.addVelocity(boost);
@@ -63,7 +60,7 @@ function onClick(event) {
 
 
 function render() {
-    renderScreen(theatre, ctx, ships, mouse, 5, 50);
+    radarScreen.render();
     requestAnimationFrame(render);
 }
 

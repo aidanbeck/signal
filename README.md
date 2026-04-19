@@ -27,10 +27,9 @@ First Person UI
 [x] ability functions
 [x] hitting functions
 
-* checks ui
-* start randomization
+[x] checks test ui
 
-* response text ui
+* start randomization
 * graphic visualization
 
 * turn orders, ability vetos

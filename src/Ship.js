@@ -2,14 +2,16 @@ import Velocity from '../easel/Velocity.js';
 
 export default class Ship {
 
-    constructor(x = 0, y = 0, turns = 3, health = 3, color = "green", v = new Velocity(0,0)) {
+    constructor(x = 0, y = 0, dotRadius = 5, color = "green", turns = 3, health = 3, v = new Velocity(0,0)) {
 
         this.x = x;
         this.y = y;
+        this.dotRadius = dotRadius;
+        this.color = color;
+
         this.turns = turns;
         this.health = health;
         this.v = v;
-        this.color = color;
     }
 
     longitude(sub) {
