@@ -111,6 +111,8 @@ export default class RadarScreen {
             this.ctx.beginPath();
             this.ctx.arc(ship.x, ship.y, ship.dotRadius, 0, Math.PI * 2);
             this.ctx.fill();
+
+            ship.color == "rgba(0, 0, 200, 0.8)" && this.ctx.fillText("bouey", ship.x - 15, ship.y + 15);
         }
     }
     

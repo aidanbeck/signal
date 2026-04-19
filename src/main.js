@@ -35,11 +35,12 @@ theatre.redraw = () => {}; // canvas cannot resize, as it is a fixed resolution
 export const ships = [
     new Ship(0, 0, 5, "rgba(0, 200, 0, 0.8)"),
     new Ship(310, 130, 5,"rgba(200, 0, 0, 0)"), // !!! set to 0.8 to visualize
-    new Ship(120, 120, 3, "rgba(0, 0, 200, 0.8)"),
+    new Ship(120, 120, 5, "rgba(0, 0, 200, 0.8)"),
 ]
 for (let ship of ships) {
     ship.randomizeLocation(12, 8); // magic number! set to grid dimensions
 }
+
 
 const mouse = { x: ships[0].x, y: ships[0].y }
 let abilityVisual = { text: ""};
@@ -137,11 +138,22 @@ function render() {
     requestAnimationFrame(render);
 }
 
+let boueyTimer = 0;
 function physics() {
     for (let ship of ships) {
         ship.v.moveObject(ship);
-        ship.v.applyFriction(0.9);
+        
     }
+    ships[0].v.applyFriction(0.9);
+    ships[2].v.applyFriction(0.99);
+
+    boueyTimer++
+    if (boueyTimer > 100) {
+        ships[2].v.x += (Math.random() - 0.5) / 3;
+        ships[2].v.y += (Math.random() - 0.5) /3;
+        boueyTimer = 0;
+    }
+    
 
 }
 
