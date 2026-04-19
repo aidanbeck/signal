@@ -108,8 +108,8 @@ function onClick(event) {
 
 
 // Images
-const computerScene = new Image(); computerScene.src = "../art/environment/computerscene.png";
-const computerOverlay = new Image(); computerOverlay.src = "../art/environment/computerscene_screenoverlay.png";
+const computerScene = new Image(); computerScene.src = "./art/environment/computerscene.png";
+const computerOverlay = new Image(); computerOverlay.src = "./art/environment/computerscene_screenoverlay.png";
 
 function render() {
     radarScreen.render();
