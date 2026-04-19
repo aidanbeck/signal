@@ -2,7 +2,7 @@ import { ships, setAbilityVisual } from "./main.js";
 
 const SHIP = ships[0];
 const SUB = ships[1];
-const BOUEY = ships[2];
+const BOUY = ships[2];
 
 function distanceAbility() {
 
@@ -13,14 +13,14 @@ function distanceAbility() {
 
 }
 
-function boueyAbility() {
+function bouyAbility() {
 
-    const shipIsCloser = SHIP.isCloserToBouey(SUB, BOUEY);
+    const shipIsCloser = SHIP.isCloserToBouy(SUB, BOUY);
 
     if (shipIsCloser) {
-        setAbilityVisual({ type: "bouey", text: "Bouey: You are closer."});
+        setAbilityVisual({ type: "bouy", text: "Bouy: You are closer."});
     } else {
-        setAbilityVisual({ type: "bouey", text: "Bouey: The sub is closer."});
+        setAbilityVisual({ type: "bouy", text: "bouy: The sub is closer."});
     }
 }
 
@@ -93,7 +93,7 @@ function addListener(id, func) {
 }
 
 addListener("distanceAbility", distanceAbility);
-addListener("boueyAbility", boueyAbility);
+addListener("bouyAbility", bouyAbility);
 addListener("longitudeAbility", longitudeAbility);
 addListener("latitudeAbility", latitudeAbility);
 addListener("radius2kAbility", radius2kAbility);

@@ -112,7 +112,7 @@ export default class RadarScreen {
             this.ctx.arc(ship.x, ship.y, ship.dotRadius, 0, Math.PI * 2);
             this.ctx.fill();
 
-            ship.color == "rgba(0, 0, 200, 0.8)" && this.ctx.fillText("bouey", ship.x - 15, ship.y + 15);
+            ship.color == "rgba(0, 0, 200, 0.8)" && this.ctx.fillText("bouy", ship.x - 15, ship.y + 15);
         }
     }
     
@@ -164,7 +164,7 @@ export default class RadarScreen {
             ctx.fillRect(0, visual.y, this.gridWidth * this.tileSizePixels, this.gridHeight * this.tileSizePixels - visual.y);
         }
 
-        // !!! todo: bouey ability
+        // !!! todo: bouy ability
         // !!! todo: hot / cold
     }
 

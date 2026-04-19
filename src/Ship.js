@@ -52,11 +52,11 @@ export default class Ship {
         return false;
     }
 
-    isCloserToBouey(sub, bouey) {
-        const boueyShipDistance = bouey.distance(this);
-        const boueySubDistance = bouey.distance(sub);
+    isCloserToBouy(sub, bouy) {
+        const bouyShipDistance = bouy.distance(this);
+        const bouySubDistance = bouy.distance(sub);
 
-        if (boueySubDistance > boueyShipDistance) {
+        if (bouySubDistance > bouyShipDistance) {
             return true;
         }
 
