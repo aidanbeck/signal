@@ -16,7 +16,7 @@ theatre.redraw = () => {}; // canvas cannot resize, as it is a fixed resolution
 
 // Game State
 
-const ships = [
+export const ships = [
     new Ship(0, 0, 5, "rgba(0, 200, 0, 0.8)"),
     new Ship(310, 130, 5,"rgba(200, 0, 0, 0)"), // !!! set to 0.8 to visualize
     new Ship(120, 120, 3, "rgba(0, 0, 200, 0.8)"),
@@ -27,8 +27,12 @@ for (let ship of ships) {
 
 const mouse = { x: ships[0].x, y: ships[0].y }
 // const abilityVisual = { type: 'radius', x:0, y:0, r: ships[0].tileSize * 4}
-const abilityVisual = { type: 'north', x:120, y:120, r: ships[0].tileSize * 4, subInsideRadius: true }
+// let abilityVisual = { type: 'north', x:120, y:120, r: ships[0].tileSize * 4, subInsideRadius: true }
+let abilityVisual = {}
 
+export function setAbilityVisual(visual) {
+    Object.assign(abilityVisual, visual);
+}
 
 // Radar Screen
 const radarScreen = new RadarScreen(theatre, ships, mouse, abilityVisual);
@@ -86,7 +90,7 @@ function render() {
 }
 
 function physics() {
-    start();
+    // start();
     for (let ship of ships) {
         ship.v.moveObject(ship);
         ship.v.applyFriction(0.9);
@@ -99,3 +103,4 @@ setInterval(physics, 20);
 
 
 globalThis.SHIPS = ships; // expose as global variable for console testing
+globalThis.ABILITYVISUAL = abilityVisual;

@@ -5,6 +5,7 @@
   <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0"/>
   <title>Sonar Search</title>
   <script type="module" src="./src/main.js"></script>
+  <script type="module" src="./src/abilities.js" defer></script>
   <style>
     html, body {
     margin: 0;
@@ -30,102 +31,25 @@
   <div>
     <h1>SONAR</h1>
     <h2>Abilities</h2>
-    <button onClick="distanceAbility()">Distance</button>
+    <button id="distanceAbility">Distance</button>
     <br><br>
-    <button onclick="boueyAbility()">Bouey</button>
+    <button id="boueyAbility">Bouey</button>
     <br><br>
     <button>Hot or Cold (Not Implemented)</button>
     <br><br>
-    <button onclick="longitudeAbility()">Longitude</button>
-    <button onclick="latitudeAbility()">Latitude</button>
+    <button id="longitudeAbility">Longitude</button>
+    <button id="latitudeAbility">Latitude</button>
     <br><br>
-    <button onclick="radius5kAbility()">Radius (5k)</button>
-    <button onclick="radius10kAbility()">Radius (10k)</button>
-    <button onclick="radius15kAbility()">Radius (15k)</button>
+    <button id="radius2kAbility">Radius (2k)</button>
+    <button id="radius4kAbility">Radius (4k)</button>
+    <button id="radius8kAbility">Radius (8k)</button>
     <br><br>
     <hr>
 
     <h1>Hit</h1>
     x: <input id="xInput"><br>
     y: <input id="yInput"><br>
-    <button onclick="launchMissile()">Launch</button>
+    <button id="launchMissile">Launch</button>
   </div>
 </body>
-
-<script defer>
-  // testing ui button functions
-
-  let SHIP;
-  let SUB;
-  let BOUEY;
-
-  function start() {
-      SHIP = SHIPS[0];
-      SUB = SHIPS[1];
-      BOUEY = SHIPS[2];
-  }
-
-
-function distanceAbility() {
-
-    alert("kilometers: " + SHIP.distance(SUB) / SHIP.tileSize);
-
-}
-
-function boueyAbility() {
-
-    const shipIsCloser = SHIP.isCloserToBouey(SUB, BOUEY);
-
-    if (shipIsCloser) {
-        alert("Bouey: You are closer to me than the sub is.");
-    } else {
-        alert("Bouey: The sub is closer to me than you are.")
-    }
-}
-
-function longitudeAbility() {
-    const eastWest = SHIP.longitude(SUB);
-
-    eastWest == -1 && alert("The sub is west of you.");
-    eastWest == 1 && alert("The sub is east of you.");
-}
-
-function latitudeAbility() {
-    const northSouth = SHIP.latitude(SUB);
-
-    northSouth == -1 && alert("The sub is north of you.");
-    northSouth == 1 && alert("The sub is south of you.");
-}
-
-
-
-function radius5kAbility() {
-    const withinRadius = SHIP.radius(SUB, 5* SHIP.tileSize);
-
-    withinRadius && alert("Sub is within 5 kilometers.");
-    !withinRadius && alert("Sub is beyond 5 kilometers.");
-}
-function radius10kAbility() {
-    const withinRadius = SHIP.radius(SUB, 10* SHIP.tileSize);
-
-    withinRadius && alert("Sub is within 10 kilometers.");
-    !withinRadius && alert("Sub is beyond 10 kilometers.");
-}
-function radius15kAbility() {
-    const withinRadius = SHIP.radius(SUB, 15* SHIP.tileSize);
-
-    withinRadius && alert("Sub is within 15 kilometers.");
-    !withinRadius && alert("Sub is beyond 15 kilometers.");
-}
-
-function launchMissile() {
-  let x = document.getElementById("xInput").value;
-  let y = document.getElementById("yInput").value;
-  let hits = SUB.hits(x, y);
-
-  hits && alert("You hit the sub!");
-  !hits && alert("You missed.");
-}
-
-</script>
 </html>

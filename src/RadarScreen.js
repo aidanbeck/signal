@@ -158,6 +158,9 @@ export default class RadarScreen {
             ctx.fillStyle = "rgba(200, 0, 0, 0.4)";
             ctx.fillRect(0, visual.y, this.gridWidth * this.tileSizePixels, this.gridHeight * this.tileSizePixels - visual.y);
         }
+
+        // todo: bouey ability
+        // todo: hot / cold
     }
 
 }
