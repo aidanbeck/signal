@@ -30,15 +30,25 @@ theatre.addEventListener("contextmenu", (e) => e.preventDefault());
 theatre.addEventListener("pointermove", mouseMove);
 theatre.addEventListener("pointerdown", onClick);
 
-function mouseMove(event) {
+
+function getWorldCoordinates(event) {
     let {x, y} = theatre.getEventCoordinates(event);
+
+    return {
+        x: x + ships[0].x,
+        y: y + ships[0].y
+    }
+}
+
+function mouseMove(event) {
+    let {x, y} = getWorldCoordinates(event);
 
     mouse.x = x;
     mouse.y = y;
 }
 
 function onClick(event) {
-    let {x, y} = theatre.getEventCoordinates(event);
+    let {x, y} = getWorldCoordinates(event);
 
     //cetner around ship 0
     x -= ships[0].x;

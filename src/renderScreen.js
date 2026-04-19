@@ -1,11 +1,21 @@
 export default function render(theatre, ctx, ships, mouse, dotRadius, lineSpacePixels) {
 
     // ctx.shadowBlur = 15;
+
+    
+
     clearCanvas(theatre, ctx);
+
+    //offset canvas
+
+    ctx.save();
+    ctx.translate(-ships[0].x, -ships[0].y);
+
     renderGrid(theatre, ctx, lineSpacePixels);
     lineToMouse(ctx, ships, mouse);
     renderShips(ctx, ships, dotRadius);
 
+    ctx.restore();
     
 }
 
