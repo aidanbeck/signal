@@ -2,7 +2,7 @@ import Velocity from '../easel/Velocity.js';
 
 export default class Ship {
 
-    constructor(x = 0, y = 0, dotRadius = 5, color = "green", turns = 3, health = 3, v = new Velocity(0,0)) {
+    constructor(x = 0, y = 0, dotRadius = 5, color = "green", turns = 3, health = 3, v = new Velocity(0,0), tileSize = 50) {
 
         this.x = x;
         this.y = y;
@@ -12,6 +12,7 @@ export default class Ship {
         this.turns = turns;
         this.health = health;
         this.v = v;
+        this.tileSize = tileSize;
     }
 
     longitude(sub) {
@@ -59,10 +60,10 @@ export default class Ship {
         // todo
     }
 
-    hits(gridX, gridY, lineSpacePixels) {
+    hits(gridX, gridY) {
 
-        const myGridX = Math.floor(this.x / lineSpacePixels);
-        const myGridY = Math.floor(this.y / lineSpacePixels);
+        const myGridX = Math.floor(this.x / this.tileSize);
+        const myGridY = Math.floor(this.y / this.tileSize);
 
         return gridX == myGridX && gridY == myGridY;
         

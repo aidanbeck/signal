@@ -64,11 +64,9 @@
   }
 
 
-  const gridPixels = 50;
-
 function distanceAbility() {
 
-    alert("kilometers: " + SHIP.distance(SUB) / gridPixels);
+    alert("kilometers: " + SHIP.distance(SUB) / SHIP.tileSize);
 
 }
 
@@ -100,19 +98,19 @@ function latitudeAbility() {
 
 
 function radius5kAbility() {
-    const withinRadius = SHIP.radius(SUB, 5* gridPixels);
+    const withinRadius = SHIP.radius(SUB, 5* SHIP.tileSize);
 
     withinRadius && alert("Sub is within 5 kilometers.");
     !withinRadius && alert("Sub is beyond 5 kilometers.");
 }
 function radius10kAbility() {
-    const withinRadius = SHIP.radius(SUB, 10* gridPixels);
+    const withinRadius = SHIP.radius(SUB, 10* SHIP.tileSize);
 
     withinRadius && alert("Sub is within 10 kilometers.");
     !withinRadius && alert("Sub is beyond 10 kilometers.");
 }
 function radius15kAbility() {
-    const withinRadius = SHIP.radius(SUB, 15* gridPixels);
+    const withinRadius = SHIP.radius(SUB, 15* SHIP.tileSize);
 
     withinRadius && alert("Sub is within 15 kilometers.");
     !withinRadius && alert("Sub is beyond 15 kilometers.");
@@ -121,7 +119,7 @@ function radius15kAbility() {
 function launchMissile() {
   let x = document.getElementById("xInput").value;
   let y = document.getElementById("yInput").value;
-  let hits = SUB.hits(x, y, gridPixels);
+  let hits = SUB.hits(x, y);
 
   hits && alert("You hit the sub!");
   !hits && alert("You missed.");
