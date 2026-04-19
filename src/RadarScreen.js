@@ -79,7 +79,7 @@ export default class RadarScreen {
             let x = this.ships[0].x - this.canvas.width / 2;
             let y = i - this.tileSizePixels/2 + this.tileSizePixels;
             
-            ctx.fillText(string, x + 5, y + 3);
+            ctx.fillText(string, x + 15, y + 3);
         }
 
         //label columns
@@ -89,7 +89,7 @@ export default class RadarScreen {
             let x = i + this.tileSizePixels / 2;
             let y = this.ships[0].y - this.canvas.height / 2;
             
-            ctx.fillText(string, x - 3, y + 10);
+            ctx.fillText(string, x - 3, y + 25);
         }
 
     }

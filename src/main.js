@@ -65,8 +65,8 @@ function getWorldCoordinates(event) {
     let {x, y} = theatre.getEventCoordinates(event);
 
     return {
-        x: x + ships[0].x - 100 - radarCanvas.width/2,
-        y: y + ships[0].y - 100 - radarCanvas.height / 2
+        x: x + ships[0].x - 228 - radarCanvas.width/2,
+        y: y + ships[0].y - 59 - radarCanvas.height / 2
     } // 100 & 100 are the screen offsets
 }
 
@@ -107,11 +107,15 @@ function onClick(event) {
 }
 
 
+// Images
+const computerScene = new Image(); computerScene.src = "../art/environment/computerscene.png";
+const computerOverlay = new Image(); computerOverlay.src = "../art/environment/computerscene_screenoverlay.png";
+
 function render() {
     radarScreen.render();
 
-    let x = 100;
-    let y = 100;
+    let x = 228; // magic numbers!
+    let y = 59;
 
     theatre.ctx.fillRect(x, y, radarScreen.canvas.width, radarScreen.canvas.height);
     
@@ -127,7 +131,8 @@ function render() {
     theatre.ctx.drawImage(radarScreen.canvas, x, y);
     theatre.ctx.restore();
 
-    
+    theatre.ctx.drawImage(computerScene, 0, 0);
+    theatre.ctx.drawImage(computerOverlay, 228, 59);
 
     requestAnimationFrame(render);
 }
@@ -139,6 +144,7 @@ function physics() {
     }
 
 }
+
 
 requestAnimationFrame(render);
 setInterval(physics, 20);
