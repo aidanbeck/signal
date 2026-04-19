@@ -10,13 +10,44 @@
     margin: 0;
     padding: 0;
     overflow: hidden;
+    display: flex;
     }
     canvas {
       height: 100vh;
+      flex: 1;
+    }
+    div {
+      flex: 1;
+      margin-left: 1%;
+      margin-right: -1%;
     }
   </style>
 </head>
 <body>
   <canvas id="theatre"></canvas>
+  <div>
+    <h1>SONAR</h1>
+
+    <h2>Abilities</h2>
+    <button>Distance</button>
+    <br><br>
+    <button>Bouey</button>
+    <br><br>
+    <button>Hot or Cold (Not Implemented)</button>
+    <br><br>
+    <button>Longitude</button>
+    <button>Latitude</button>
+    <br><br>
+    <button>Radius (5k)</button>
+    <button>Radius (10k)</button>
+    <button>Radius (15k)</button>
+    <br><br>
+    <hr>
+
+    <h1>Hit</h1>
+    x: <input><br>
+    y: <input><br>
+    <button>Launch</button>
+  </div>
 </body>
 </html>
