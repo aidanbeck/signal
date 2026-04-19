@@ -7,8 +7,9 @@ const BOUEY = ships[2];
 function distanceAbility() {
 
   const distance = SHIP.distance(SUB);
-  setAbilityVisual({ type: 'distance', x: SHIP.x, y: SHIP.y, r: distance});
-  console.log("kilometers: " + SHIP.distance(SUB) / SHIP.tileSize);
+  setAbilityVisual({ type: 'distance', x: SHIP.x, y: SHIP.y, r: distance,
+    text: "kilometers: " + SHIP.distance(SUB) / SHIP.tileSize
+  });
 
 }
 
@@ -17,9 +18,9 @@ function boueyAbility() {
     const shipIsCloser = SHIP.isCloserToBouey(SUB, BOUEY);
 
     if (shipIsCloser) {
-        console.log("Bouey: You are closer to me than the sub is.");
+        setAbilityVisual({ type: "bouey", text: "Bouey: You are closer to me than the sub is."});
     } else {
-        console.log("Bouey: The sub is closer to me than you are.")
+        setAbilityVisual({ type: "bouey", text: "Bouey: The sub is closer to me than the sub is."});
     }
 }
 
@@ -27,11 +28,13 @@ function longitudeAbility() {
     const eastWest = SHIP.longitude(SUB);
 
     if (eastWest == -1) {
-        console.log("The sub is west of you.");
-        setAbilityVisual({ type: 'west', x: SHIP.x, y: SHIP.y});
+        setAbilityVisual({ type: 'west', x: SHIP.x, y: SHIP.y,
+            text: "The sub is west of you."
+        });
     } else {
-        console.log("The sub is east of you.");
-        setAbilityVisual({ type: 'west', x: SHIP.x, y: SHIP.y});
+        setAbilityVisual({ type: 'east', x: SHIP.x, y: SHIP.y,
+            text: "The sub is east of you."
+        });
     }
 
     
@@ -41,11 +44,13 @@ function latitudeAbility() {
     const northSouth = SHIP.latitude(SUB);
 
     if (northSouth == -1) {
-        console.log("The sub is north of you.");
-        setAbilityVisual({ type: 'north', x: SHIP.x, y: SHIP.y});
+        setAbilityVisual({ type: 'north', x: SHIP.x, y: SHIP.y,
+            text: "The sub is north of you."
+        });
     } else {
-        console.log("The sub is south of you.");
-        setAbilityVisual({ type: 'south', x: SHIP.x, y: SHIP.y});
+        setAbilityVisual({ type: 'south', x: SHIP.x, y: SHIP.y,
+            text: "The sub is south of you."
+        });
     }
 }
 
@@ -53,12 +58,14 @@ function radiusAbility(searchRadius) {
     const withinRadius = SHIP.radius(SUB, searchRadius * SHIP.tileSize);
 
     if (withinRadius) {
-        console.log(`Sub is within ${searchRadius} kilometers.`);
-        setAbilityVisual({ type: 'radius', x: SHIP.x, y: SHIP.y, r: searchRadius * SHIP.tileSize, subInsideRadius: true});
+        setAbilityVisual({ type: 'radius', x: SHIP.x, y: SHIP.y, r: searchRadius * SHIP.tileSize, subInsideRadius: true,
+            text: `Sub is within ${searchRadius} kilometers.`
+        });
     }
     else {
-        console.log(`Sub is beyond ${searchRadius} kilometers.`);
-        setAbilityVisual({ type: 'radius', x: SHIP.x, y: SHIP.y, r: searchRadius * SHIP.tileSize, subInsideRadius: false});
+        setAbilityVisual({ type: 'radius', x: SHIP.x, y: SHIP.y, r: searchRadius * SHIP.tileSize, subInsideRadius: false,
+            text: `Sub is beyond ${searchRadius} kilometers.`
+        });
     }
 }
 
@@ -77,8 +84,8 @@ function launchMissile() {
   let y = document.getElementById("yInput").value;
   let hits = SUB.hits(x, y);
 
-  hits && console.log("You hit the sub!");
-  !hits && console.log("You missed.");
+  hits && setAbilityVisual({ type: "hit", text: "You hit the sub!"});
+  !hits && setAbilityVisual({ type: "miss", text: "You missed."});
 }
 
 function addListener(id, func) {

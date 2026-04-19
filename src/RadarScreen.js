@@ -27,6 +27,7 @@ export default class RadarScreen {
         this.renderShips();
         this.renderAbilityVisual();
         this.renderGridLabels();
+        this.renderText();
         
 
         this.ctx.restore();
@@ -159,8 +160,16 @@ export default class RadarScreen {
             ctx.fillRect(0, visual.y, this.gridWidth * this.tileSizePixels, this.gridHeight * this.tileSizePixels - visual.y);
         }
 
-        // todo: bouey ability
-        // todo: hot / cold
+        // !!! todo: bouey ability
+        // !!! todo: hot / cold
+    }
+
+    renderText() {
+        this.ctx.fillStyle = "white";
+        this.ctx.font = "bold 24px Consolas";
+        const visual = this.abilityVisual;
+        let player = this.ships[0];
+        this.ctx.fillText(visual.text, player.x - 180, player.y - 140);
     }
 
 }

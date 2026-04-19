@@ -26,9 +26,7 @@ for (let ship of ships) {
 }
 
 const mouse = { x: ships[0].x, y: ships[0].y }
-// const abilityVisual = { type: 'radius', x:0, y:0, r: ships[0].tileSize * 4}
-// let abilityVisual = { type: 'north', x:120, y:120, r: ships[0].tileSize * 4, subInsideRadius: true }
-let abilityVisual = {}
+let abilityVisual = { text: ""};
 
 export function setAbilityVisual(visual) {
     Object.assign(abilityVisual, visual);
@@ -104,3 +102,4 @@ setInterval(physics, 20);
 
 globalThis.SHIPS = ships; // expose as global variable for console testing
 globalThis.ABILITYVISUAL = abilityVisual;
+globalThis.THEATRE = theatre;
