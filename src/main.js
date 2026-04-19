@@ -1,7 +1,9 @@
 import Theatre from '../easel/Theatre.js';
+import Texture from '../easel/Texture.js';
 import Velocity from '../easel/Velocity.js';
-import {Circle} from '../easel/Shape.js';
+import { Circle, Rectangle } from '../easel/Shape.js';
 
+import { Card, Scene } from '../src/Scene.js';
 import Ship from '../src/Ship.js';
 import RadarScreen from '../src/RadarScreen.js';
 
@@ -30,7 +32,6 @@ export function setAbilityVisual(visual) {
     abilitySound.play();
     abilitySound.currentTime = 0.4;
     Object.assign(abilityVisual, visual);
-    
 }
 
 const mouse = { x: 0, y: 0 }
@@ -45,7 +46,6 @@ for (let ship of ships) {
     ship.randomizeLocation(radarScreen.gridWidth, radarScreen.gridHeight);
 }
 
-
 function getRadarCoordinates(event) {
     let {x, y} = theatre.getEventCoordinates(event);
 
@@ -56,9 +56,37 @@ function getRadarCoordinates(event) {
 }
 
 
-// Images
-const computerScene = new Image(); computerScene.src = "./art/environment/computerscene.png";
-const computerOverlay = new Image(); computerOverlay.src = "./art/environment/computerscene_screenoverlay.png";
+// Computer Scene
+const computerScene = new Scene("./art/environment/computerscene.png");
+
+// Radar Card
+let radarCard = new Card(
+    radarImageOffset.x, radarImageOffset.y, radarScreen.canvas.width, radarScreen.canvas.height,
+    null, // radarCanvas
+    radarClick, radarHover, radarRender
+);
+function radarClick(event) {}
+function radarHover(event) {}
+function radarRender(ctx) {
+    ctx.fillRect(radarImageOffset.x, radarImageOffset.y, radarScreen.canvas.width, radarScreen.canvas.height);
+
+    ctx.save();
+    ctx.globalCompositeOperation = "lighter";
+    ctx.filter = "blur(5px)";
+    ctx.drawImage(radarScreen.canvas, radarImageOffset.x, radarImageOffset.y);
+    ctx.filter = "none";
+    ctx.globalCompositeOperation = "source-over";
+    ctx.drawImage(radarScreen.canvas, radarImageOffset.x, radarImageOffset.y);
+    ctx.restore();
+}
+computerScene.cards.push(radarCard);
+
+// Overlay Card
+let computerOverlayCard = new Card(
+    radarCard.x, radarCard.y, radarCard.w, radarCard.h,
+    new Texture("./art/environment/computerscene_screenoverlay.png")
+)
+computerScene.cards.push(computerOverlayCard);
 
 
 // Audio
@@ -92,11 +120,7 @@ function mouseMove(event) {
             radarMouse.x = x;
             radarMouse.y = y;
         }
-
-        
     }
-
-    
 }
 
 function onClick(event) {
@@ -127,22 +151,9 @@ function onClick(event) {
 // Main Loops
 
 function render() {
+
     radarScreen.render();
-
-    theatre.ctx.fillRect(radarImageOffset.x, radarImageOffset.y, radarScreen.canvas.width, radarScreen.canvas.height);
-
-    theatre.ctx.save();
-    theatre.ctx.globalCompositeOperation = "lighter";
-    theatre.ctx.filter = "blur(5px)";
-    theatre.ctx.drawImage(radarScreen.canvas, radarImageOffset.x, radarImageOffset.y);
-    theatre.ctx.filter = "none";
-    theatre.ctx.globalCompositeOperation = "source-over";
-    theatre.ctx.drawImage(radarScreen.canvas, radarImageOffset.x, radarImageOffset.y);
-    theatre.ctx.restore();
-
-    theatre.ctx.drawImage(computerScene, 0, 0);
-    theatre.ctx.drawImage(computerOverlay, radarImageOffset.x, radarImageOffset.y);
-
+    computerScene.render(theatre.ctx);
     requestAnimationFrame(render);
 }
 
@@ -161,8 +172,6 @@ function physics() {
         ships[2].v.y += (Math.random() - 0.5) /3;
         bouyTimer = 0;
     }
-    
-
 }
 
 requestAnimationFrame(render);
@@ -173,3 +182,4 @@ setInterval(physics, 20);
 globalThis.SHIPS = ships;
 globalThis.ABILITYVISUAL = abilityVisual;
 globalThis.THEATRE = theatre;
+globalThis.SCENE = computerScene;
