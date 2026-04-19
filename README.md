@@ -8,17 +8,8 @@ Underlying System
 Radar UI
 
 First Person UI
-* Render to OffscreenCanvas -> Theatre
+* "scenes"
+ * images, offsets, & frames.
+ * clickable hitboxes
 
-* Scale OffScreen Canvas to XY in Main Canvas
-* Render HD Background Image
-
-
-[x] move sub
-[x] scrolling grid
-[x] Grid styling (coordinates, size)
-[x] ability functions
-[x] hitting functions
-[x] checks test ui
-[x] location randomization
-[x] graphic visualization
+* only transfer click to radar if click is within screen hitbox

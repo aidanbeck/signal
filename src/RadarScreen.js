@@ -173,7 +173,7 @@ export default class RadarScreen {
         this.ctx.font = "bold 24px Consolas";
         const visual = this.abilityVisual;
         let player = this.ships[0];
-        this.ctx.fillText(visual.text, player.x - 180, player.y - 140);
+        this.ctx.fillText(visual.text, player.x - 180, player.y - 110);
     }
 
 }

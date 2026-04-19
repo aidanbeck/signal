@@ -18,9 +18,9 @@ function boueyAbility() {
     const shipIsCloser = SHIP.isCloserToBouey(SUB, BOUEY);
 
     if (shipIsCloser) {
-        setAbilityVisual({ type: "bouey", text: "Bouey: You are closer to me than the sub is."});
+        setAbilityVisual({ type: "bouey", text: "Bouey: You are closer."});
     } else {
-        setAbilityVisual({ type: "bouey", text: "Bouey: The sub is closer to me than the sub is."});
+        setAbilityVisual({ type: "bouey", text: "Bouey: The sub is closer."});
     }
 }
 
