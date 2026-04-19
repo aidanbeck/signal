@@ -43,12 +43,25 @@ function getWorldCoordinates(event) {
 function mouseMove(event) {
     let {x, y} = getWorldCoordinates(event);
 
+    // prevent when moving
+    if (ships[0].v.getMagnitude() > 0.5) {
+        return;
+    }
+
     mouse.x = x;
     mouse.y = y;
 }
 
 function onClick(event) {
     let {x, y} = getWorldCoordinates(event);
+
+    // prevent when moving
+    if (ships[0].v.getMagnitude() > 0.5) {
+        return;
+    }
+
+    mouse.x = x;
+    mouse.y = y;
 
     //center around player (ship 0)
     x -= ships[0].x;
