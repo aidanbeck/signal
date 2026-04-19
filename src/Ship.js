@@ -14,12 +14,12 @@ export default class Ship {
 
     longitude(sub) {
 
-        if (this.x > sub.x) { return -1; } // sub is east
-        if (this.x < sub.x) { return 1; } //sub is west
+        if (this.x > sub.x) { return -1; } // sub is west
+        if (this.x < sub.x) { return 1; } //sub is east
         return 0; // sub is on the same x-level
     }
 
-    latitiude(sub) {
+    latitude(sub) {
 
         if (this.y > sub.y) { return -1; } // sub is north
         if (this.y < sub.y) { return 1; } //sub is south
@@ -57,7 +57,7 @@ export default class Ship {
         // todo
     }
 
-    hit(gridX, gridY, lineSpacePixels) {
+    hits(gridX, gridY, lineSpacePixels) {
 
         const myGridX = Math.floor(this.x / lineSpacePixels);
         const myGridY = Math.floor(this.y / lineSpacePixels);

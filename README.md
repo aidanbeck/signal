@@ -25,10 +25,12 @@ First Person UI
 [x] Grid styling (coordinates, size)
 
 [x] ability functions
-[ ] hitting functions
+[x] hitting functions
 
 * checks ui
-* response ui
-* grid labels
 * start randomization
-* visualization
+
+* response text ui
+* graphic visualization
+
+* turn orders, ability vetos

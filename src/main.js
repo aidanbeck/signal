@@ -22,7 +22,7 @@ const mouse = {
 
 const ships = [
     new Ship(0, 0, 3, 3, "rgba(0, 200, 0, 0.8)"),
-    new Ship(50, 25, 3, 3, "rgba(200, 0, 0, 0.8)"),
+    new Ship(310, 130, 3, 3, "rgba(200, 0, 0, 0.8)"),
     new Ship(100, 100, 0, 0, "rgba(0, 0, 200, 0.8)"),
 ]
 
@@ -68,6 +68,7 @@ function render() {
 }
 
 function physics() {
+    start();
     for (let ship of ships) {
         ship.v.moveObject(ship);
         ship.v.applyFriction(0.9);
