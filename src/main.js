@@ -22,11 +22,11 @@ function startTrack() {
 }
 
 
-// Theatre Setup
+// Radar Theatre Setup
 const canvasElement = document.getElementById("theatre");
-const theatre = new Theatre(canvasElement, 400, 400);
-theatre.origin = "CENTER";
-theatre.shorterDimensionConsistent = true;
+const theatre = new Theatre(canvasElement, 854, 480);
+// theatre.origin = "CENTER";
+theatre.widthConsistent = true;
 theatre.canvas.style.backgroundColor = "black"
 theatre.redraw = () => {}; // canvas cannot resize, as it is a fixed resolution
 
@@ -52,7 +52,8 @@ export function setAbilityVisual(visual) {
 }
 
 // Radar Screen
-const radarScreen = new RadarScreen(theatre, ships, mouse, abilityVisual);
+const radarCanvas = new OffscreenCanvas(436, 373);
+const radarScreen = new RadarScreen(radarCanvas, ships, mouse, abilityVisual);
 
 // Interaction
 theatre.addEventListener("contextmenu", (e) => e.preventDefault());
@@ -64,9 +65,9 @@ function getWorldCoordinates(event) {
     let {x, y} = theatre.getEventCoordinates(event);
 
     return {
-        x: x + ships[0].x,
-        y: y + ships[0].y
-    }
+        x: x + ships[0].x - 100 - radarCanvas.width/2,
+        y: y + ships[0].y - 100 - radarCanvas.height / 2
+    } // 100 & 100 are the screen offsets
 }
 
 function mouseMove(event) {
@@ -108,6 +109,26 @@ function onClick(event) {
 
 function render() {
     radarScreen.render();
+
+    let x = 100;
+    let y = 100;
+
+    theatre.ctx.fillRect(x, y, radarScreen.canvas.width, radarScreen.canvas.height);
+    
+    // potentially unoptomized, use this if needed
+    // theatre.ctx.drawImage(radarScreen.canvas, x, y);
+
+    theatre.ctx.save();
+    theatre.ctx.globalCompositeOperation = "lighter";
+    theatre.ctx.filter = "blur(5px)";
+    theatre.ctx.drawImage(radarScreen.canvas, x, y);
+    theatre.ctx.filter = "none";
+    theatre.ctx.globalCompositeOperation = "source-over";
+    theatre.ctx.drawImage(radarScreen.canvas, x, y);
+    theatre.ctx.restore();
+
+    
+
     requestAnimationFrame(render);
 }
 

@@ -2,10 +2,10 @@ import Theatre from '../easel/Theatre.js';
 
 export default class RadarScreen {
 
-    constructor(theatre, ships, mouse, abilityVisual, gridWidth = 12, gridHeight = 8, tileSizePixels = 50) {
+    constructor(canvas, ships, mouse, abilityVisual, gridWidth = 12, gridHeight = 8, tileSizePixels = 50) {
 
-        this.theatre = theatre
-        this.ctx = theatre.ctx;
+        this.canvas = canvas
+        this.ctx = canvas.getContext("2d");
         this.ships = ships;
         this.mouse = mouse;
         this.abilityVisual = abilityVisual;
@@ -20,7 +20,9 @@ export default class RadarScreen {
         // Follow Player
         this.ctx.save();
         let player = this.ships[0];
+        this.ctx.translate(this.canvas.width/2, this.canvas.height / 2);
         this.ctx.translate(-player.x, -player.y);
+        
 
         this.renderGrid();
         this.lineToMouse();
@@ -36,9 +38,9 @@ export default class RadarScreen {
 
     clearCanvas() {
 
-        const startX = -this.theatre.canvas.width / 2;
-        const startY = -this.theatre.canvas.height / 2;
-        this.ctx.clearRect(startX, startY, this.theatre.canvas.width, this.theatre.canvas.height);
+        // const startX = -this.canvas.width / 2;
+        // const startY = -this.canvas.height / 2;
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     }
 
     renderGrid() {
@@ -74,7 +76,7 @@ export default class RadarScreen {
         for (let i = 0; i < this.tileSizePixels * (gridHeight + 1); i += this.tileSizePixels) {
 
             let string = i / this.tileSizePixels;
-            let x = this.ships[0].x - this.theatre.canvas.width / 2;
+            let x = this.ships[0].x - this.canvas.width / 2;
             let y = i - this.tileSizePixels/2 + this.tileSizePixels;
             
             ctx.fillText(string, x + 5, y + 3);
@@ -85,7 +87,7 @@ export default class RadarScreen {
 
             let string = i / this.tileSizePixels;
             let x = i + this.tileSizePixels / 2;
-            let y = this.ships[0].y - this.theatre.canvas.height / 2;
+            let y = this.ships[0].y - this.canvas.height / 2;
             
             ctx.fillText(string, x - 3, y + 10);
         }
