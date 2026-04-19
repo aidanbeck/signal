@@ -22,10 +22,13 @@ First Person UI
 
 [x] move sub
 [x] scrolling grid
-[ ] Grid styling (coordinates, size)
+[x] Grid styling (coordinates, size)
 
-* checks functions
+[ ] ability functions
+[ ] hitting functions
+
 * checks ui
 * response ui
-* hitting
-* visual feedback?
+* grid labels
+* start randomization
+* visualization
