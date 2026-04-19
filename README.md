@@ -1,35 +1,24 @@
 # Ludum Dare 57 Jam
 Theme: Signal
 
-# Tasks (I love 'em)
-
+# Tasks
 Underlying System
-* Boat point
-* Submarine Point
-* Moving
+* turn orders, ability vetos
 
 Radar UI
-* Render Grid
-* Render Points
-* Render to OffscreenCanvas -> Theatre
 
 First Person UI
+* Render to OffscreenCanvas -> Theatre
+
 * Scale OffScreen Canvas to XY in Main Canvas
 * Render HD Background Image
 
 
-9PM Deadline
-
 [x] move sub
 [x] scrolling grid
 [x] Grid styling (coordinates, size)
-
 [x] ability functions
 [x] hitting functions
-
 [x] checks test ui
-
-* start randomization
-* graphic visualization
-
-* turn orders, ability vetos
+[x] location randomization
+[x] graphic visualization
