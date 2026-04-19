@@ -1,5 +1,6 @@
 import Theatre from '../easel/Theatre.js';
 import Velocity from '../easel/Velocity.js';
+import {Circle} from '../easel/Shape.js';
 
 import Ship from '../src/Ship.js';
 import RadarScreen from '../src/RadarScreen.js';
@@ -14,6 +15,7 @@ theatre.canvas.style.backgroundColor = "black"
 theatre.redraw = () => {}; // canvas cannot resize, as it is a fixed resolution
 
 // Game State
+
 const ships = [
     new Ship(0, 0, 5, "rgba(0, 200, 0, 0.8)"),
     new Ship(310, 130, 5,"rgba(200, 0, 0, 0)"), // !!! set to 0.8 to visualize
@@ -24,9 +26,12 @@ for (let ship of ships) {
 }
 
 const mouse = { x: ships[0].x, y: ships[0].y }
+// const abilityVisual = { type: 'radius', x:0, y:0, r: ships[0].tileSize * 4}
+const abilityVisual = { type: 'north', x:120, y:120, r: ships[0].tileSize * 4, subInsideRadius: true }
+
 
 // Radar Screen
-const radarScreen = new RadarScreen(theatre, ships, mouse);
+const radarScreen = new RadarScreen(theatre, ships, mouse, abilityVisual);
 
 // Interaction
 theatre.addEventListener("contextmenu", (e) => e.preventDefault());

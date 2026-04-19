@@ -2,12 +2,13 @@ import Theatre from '../easel/Theatre.js';
 
 export default class RadarScreen {
 
-    constructor(theatre, ships, mouse, gridWidth = 12, gridHeight = 8, tileSizePixels = 50) {
+    constructor(theatre, ships, mouse, abilityVisual, gridWidth = 12, gridHeight = 8, tileSizePixels = 50) {
 
         this.theatre = theatre
         this.ctx = theatre.ctx;
         this.ships = ships;
         this.mouse = mouse;
+        this.abilityVisual = abilityVisual;
         this.gridWidth = gridWidth;
         this.gridHeight = gridHeight;
         this.tileSizePixels = tileSizePixels;
@@ -22,9 +23,11 @@ export default class RadarScreen {
         this.ctx.translate(-player.x, -player.y);
 
         this.renderGrid();
-        this.renderGridLabels();
         this.lineToMouse();
         this.renderShips();
+        this.renderAbilityVisual();
+        this.renderGridLabels();
+        
 
         this.ctx.restore();
     
@@ -106,7 +109,55 @@ export default class RadarScreen {
             this.ctx.arc(ship.x, ship.y, ship.dotRadius, 0, Math.PI * 2);
             this.ctx.fill();
         }
+    }
+    
+    renderAbilityVisual() {
+        const visual = this.abilityVisual;
+        const ctx = this.ctx;
 
-}
+        if (visual.type == 'distance') {
+            ctx.strokeStyle = "rgba(200, 0, 0, 0.4)";
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            this.ctx.arc(visual.x, visual.y, visual.r, 0, Math.PI * 2);
+            this.ctx.stroke();
+        }
+
+        if (visual.type == 'radius') {
+
+            ctx.fillStyle = "rgba(200, 0, 0, 0.4)";
+
+            if (visual.subInsideRadius) { 
+                ctx.beginPath();
+                ctx.arc(visual.x, visual.y, visual.r, 0, Math.PI * 2);
+                ctx.fill();
+            } else {
+                ctx.save();
+                ctx.beginPath();
+                ctx.rect( 0, 0, this.gridWidth * this.tileSizePixels, this.gridHeight * this.tileSizePixels);
+                ctx.clip();
+                ctx.arc(visual.x, visual.y, visual.r, 0, Math.PI * 2);
+                ctx.fill("evenodd");
+                ctx.restore();
+            }
+        }
+
+        if (visual.type == 'west') {
+            ctx.fillStyle = "rgba(200, 0, 0, 0.4)";
+            ctx.fillRect(0, 0, visual.x, this.gridHeight * this.tileSizePixels);
+        }
+        if (visual.type == 'east') {
+            ctx.fillStyle = "rgba(200, 0, 0, 0.4)";
+            ctx.fillRect(visual.x, 0, this.gridWidth * this.tileSizePixels, this.gridHeight * this.tileSizePixels);
+        }
+        if (visual.type == 'north') {
+            ctx.fillStyle = "rgba(200, 0, 0, 0.4)";
+            ctx.fillRect(0, 0, this.gridWidth * this.tileSizePixels, visual.y);
+        }
+        if (visual.type == 'south') {
+            ctx.fillStyle = "rgba(200, 0, 0, 0.4)";
+            ctx.fillRect(0, visual.y, this.gridWidth * this.tileSizePixels, this.gridHeight * this.tileSizePixels - visual.y);
+        }
+    }
 
 }
