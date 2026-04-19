@@ -12,6 +12,7 @@ export default function render(theatre, ctx, ships, mouse, dotRadius, lineSpaceP
     ctx.translate(-ships[0].x, -ships[0].y);
 
     renderGrid(theatre, ctx, lineSpacePixels);
+    renderGridChars(theatre, ctx, ships, lineSpacePixels);
     lineToMouse(ctx, ships, mouse);
     renderShips(ctx, ships, dotRadius);
 
@@ -68,6 +69,27 @@ function renderGrid(theatre, ctx, lineSpacePixels) {
         ctx.moveTo(i, 0);
         ctx.lineTo(i, gridHeight * lineSpacePixels);
         ctx.stroke();
+    }
+
+}
+
+function renderGridChars(theatre, ctx, ships, lineSpacePixels) {
+
+    let gridWidth = 12;
+    let gridHeight = 8;
+
+    gridWidth--;
+
+    for (let i = 0; i < lineSpacePixels * (gridHeight + 1); i += lineSpacePixels) {
+        let string = i / lineSpacePixels;
+        ctx.fillStyle = "rgb(140,170,170)";
+        ctx.fillText(string, -theatre.canvas.width / 2 + 5 + ships[0].x, i - lineSpacePixels/2 + 3 + lineSpacePixels);
+    }
+
+    for (let i = 0; i < lineSpacePixels * (gridWidth + 1); i += lineSpacePixels) {
+        let string = i / lineSpacePixels;
+        ctx.fillStyle = "rgb(140,170,170)";
+        ctx.fillText(string, i + lineSpacePixels/2 - 3, -theatre.canvas.height / 2 + 5 + ships[0].y + 5);
     }
 
 }
