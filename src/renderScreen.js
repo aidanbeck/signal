@@ -49,23 +49,25 @@ function renderShips(ctx, ships, radius) {
 
 function renderGrid(theatre, ctx, lineSpacePixels) {
 
+    let gridWidth = 12;
+    let gridHeight = 8;
+
     ctx.shadowColor = "rgb(40,70,70)"; // can make this other color, but rgba is rough.
 
     // horizontal lines
     ctx.strokeStyle = "rgb(40,70,70)";
     ctx.beginPath();
 
-    for (let i = -theatre.canvas.height / 2; i < theatre.canvas.height / 2; i += lineSpacePixels) {
-        ctx.moveTo(-theatre.canvas.width / 2, i);
-        ctx.lineTo(theatre.canvas.width / 2, i);
+    for (let i = 0; i < lineSpacePixels * (gridHeight + 1); i += lineSpacePixels) {
+        ctx.moveTo(0, i);
+        ctx.lineTo(gridWidth * lineSpacePixels, i);
         ctx.stroke();
     }
 
-    ctx.strokeStyle = "rgb(0,70,70)";
-    ctx.beginPath();
-    for (let i = -theatre.canvas.width / 2; i < theatre.canvas.width / 2; i += lineSpacePixels) {
-        ctx.moveTo(i, -theatre.canvas.height / 2);
-        ctx.lineTo(i, theatre.canvas.height / 2);
+    for (let i = 0; i < lineSpacePixels * (gridWidth + 1); i += lineSpacePixels) {
+        ctx.moveTo(i, 0);
+        ctx.lineTo(i, gridHeight * lineSpacePixels);
         ctx.stroke();
     }
+
 }

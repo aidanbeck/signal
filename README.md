@@ -19,9 +19,12 @@ First Person UI
 
 
 9PM Deadline
-* move sub
 
-* scrolling grid
+[x] move sub
+[x] scrolling grid
+[ ] Grid styling (coordinates, size)
+
+* checks functions
 * checks ui
 * response ui
 * hitting
