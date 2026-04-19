@@ -2,7 +2,7 @@ import Velocity from '../easel/Velocity.js';
 
 export default class Ship {
 
-    constructor(x = 0, y = 0, dotRadius = 5, color = "green", turns = 3, health = 3, v = new Velocity(0,0), tileSize = 50) {
+    constructor(x = 0, y = 0, dotRadius = 5, color = "green", turns = 3, health = 3, v = new Velocity(0,0), tileSize = 50) { // 50 is a magic number, it's the grid tile size
 
         this.x = x;
         this.y = y;

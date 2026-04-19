@@ -24,9 +24,6 @@ export const ships = [
     new Ship(0, 0, 5,"rgba(200, 0, 0, 0)"), // !!! set to 0.8 to visualize
     new Ship(0, 0, 5, "rgba(0, 0, 200, 0.8)"),
 ]
-for (let ship of ships) {
-    ship.randomizeLocation(12, 8); // magic number! set to grid dimensions
-}
 
 let abilityVisual = { text: ""};
 export function setAbilityVisual(visual) {
@@ -36,57 +33,26 @@ export function setAbilityVisual(visual) {
     
 }
 
-const mouse = { x: ships[0].x, y: ships[0].y }
+const mouse = { x: 0, y: 0 }
 
 
 // Radar Screen
 const radarCanvas = new OffscreenCanvas(436, 373);
-const radarScreen = new RadarScreen(radarCanvas, ships, mouse, abilityVisual);
+const radarMouse = { x: 0, y: 0 }
+const radarScreen = new RadarScreen(radarCanvas, ships, radarMouse, abilityVisual);
+const radarImageOffset = { x: 228, y: 59}
+for (let ship of ships) {
+    ship.randomizeLocation(radarScreen.gridWidth, radarScreen.gridHeight);
+}
 
 
-function getWorldCoordinates(event) {
+function getRadarCoordinates(event) {
     let {x, y} = theatre.getEventCoordinates(event);
 
     return {
-        x: x + ships[0].x - 228 - radarCanvas.width/2,
-        y: y + ships[0].y - 59 - radarCanvas.height / 2
-    } // 100 & 100 are the screen offsets
-}
-
-function mouseMove(event) {
-    let {x, y} = getWorldCoordinates(event);
-
-    // prevent when moving
-    if (ships[0].v.getMagnitude() > 0.5) {
-        return;
+        x: x + ships[0].x - radarImageOffset.x - radarCanvas.width / 2,
+        y: y + ships[0].y - radarImageOffset.y - radarCanvas.height / 2
     }
-
-    mouse.x = x;
-    mouse.y = y;
-}
-
-function onClick(event) {
-    let {x, y} = getWorldCoordinates(event);
-
-    // prevent when moving
-    if (ships[0].v.getMagnitude() > 0.5) {
-        return;
-    }
-
-    mouse.x = x;
-    mouse.y = y;
-    let newMoveSound = moveSound.cloneNode(); // !!! unoptomized
-    newMoveSound.volume = 0.05;
-    newMoveSound.play();
-
-    //center around player (ship 0)
-    x -= ships[0].x;
-    y -= ships[0].y;
-
-    let boost = new Velocity(x/10, y/10); // divide by 5 for friction 0.8, divide 10 for friction 0.9
-    ships[0].v.addVelocity(boost);
-
-    startTrack(); // !!! for audio
 }
 
 
@@ -112,27 +78,70 @@ function startTrack() {
 }
 
 
+// Interaction Handling
+
+function mouseMove(event) {
+
+    let {x, y} = theatre.getEventCoordinates(event);
+    let withinRadarScreen = true; // for now
+
+    if (withinRadarScreen) {
+        let {x, y} = getRadarCoordinates(event);
+        let shipIsStill = ships[0].v.getMagnitude() < 0.5;
+        if (shipIsStill) {
+            radarMouse.x = x;
+            radarMouse.y = y;
+        }
+
+        
+    }
+
+    
+}
+
+function onClick(event) {
+    let {x, y} = getRadarCoordinates(event);
+
+    // prevent when moving
+    if (ships[0].v.getMagnitude() > 0.5) {
+        return;
+    }
+
+    radarMouse.x = x;
+    radarMouse.y = y;
+    let newMoveSound = moveSound.cloneNode(); // !!! unoptomized
+    newMoveSound.volume = 0.05;
+    newMoveSound.play();
+
+    //center around player (ship 0)
+    x -= ships[0].x;
+    y -= ships[0].y;
+
+    let boost = new Velocity(x/10, y/10); // divide by 5 for friction 0.8, divide 10 for friction 0.9
+    ships[0].v.addVelocity(boost);
+
+    startTrack(); // !!! for audio
+}
+
+
 // Main Loops
 
 function render() {
     radarScreen.render();
 
-    let x = 228; // magic numbers!
-    let y = 59;
-
-    theatre.ctx.fillRect(x, y, radarScreen.canvas.width, radarScreen.canvas.height);
+    theatre.ctx.fillRect(radarImageOffset.x, radarImageOffset.y, radarScreen.canvas.width, radarScreen.canvas.height);
 
     theatre.ctx.save();
     theatre.ctx.globalCompositeOperation = "lighter";
     theatre.ctx.filter = "blur(5px)";
-    theatre.ctx.drawImage(radarScreen.canvas, x, y);
+    theatre.ctx.drawImage(radarScreen.canvas, radarImageOffset.x, radarImageOffset.y);
     theatre.ctx.filter = "none";
     theatre.ctx.globalCompositeOperation = "source-over";
-    theatre.ctx.drawImage(radarScreen.canvas, x, y);
+    theatre.ctx.drawImage(radarScreen.canvas, radarImageOffset.x, radarImageOffset.y);
     theatre.ctx.restore();
 
     theatre.ctx.drawImage(computerScene, 0, 0);
-    theatre.ctx.drawImage(computerOverlay, 228, 59);
+    theatre.ctx.drawImage(computerOverlay, radarImageOffset.x, radarImageOffset.y);
 
     requestAnimationFrame(render);
 }
