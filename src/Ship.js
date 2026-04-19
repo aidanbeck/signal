@@ -15,6 +15,13 @@ export default class Ship {
         this.tileSize = tileSize;
     }
 
+    randomizeLocation(gridWidth, gridHeight) {
+        const maxX = gridWidth * this.tileSize;
+        const maxY = gridHeight * this.tileSize;
+        this.x = Math.floor(Math.random() * maxX);
+        this.y = Math.floor(Math.random() * maxY);
+    }
+
     longitude(sub) {
 
         if (this.x > sub.x) { return -1; } // sub is west

@@ -14,13 +14,16 @@ theatre.canvas.style.backgroundColor = "black"
 theatre.redraw = () => {}; // canvas cannot resize, as it is a fixed resolution
 
 // Game State
-const mouse = { x: 0, y: 0 }
-
 const ships = [
     new Ship(0, 0, 5, "rgba(0, 200, 0, 0.8)"),
-    new Ship(310, 130, 5,"rgba(200, 0, 0, 0.8)"),
+    new Ship(310, 130, 5,"rgba(200, 0, 0, 0)"), // !!! set to 0.8 to visualize
     new Ship(120, 120, 3, "rgba(0, 0, 200, 0.8)"),
 ]
+for (let ship of ships) {
+    ship.randomizeLocation(12, 8); // magic number! set to grid dimensions
+}
+
+const mouse = { x: ships[0].x, y: ships[0].y }
 
 // Radar Screen
 const radarScreen = new RadarScreen(theatre, ships, mouse);
