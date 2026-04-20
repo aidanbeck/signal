@@ -1,5 +1,5 @@
 import Texture from '../easel/Texture.js';
-import { Rectangle } from '../easel/Shape.js';
+import { Point, Rectangle } from '../easel/Shape.js';
 
 export class Card extends Rectangle {
 
@@ -35,13 +35,32 @@ export class Scene {
 
             card.texture.draw(card.x, card.y, card.frame, ctx);
         }
+
+        //debug show hitboxes
+        ctx.strokeStyle = "red";
+        for (let card of this.cards) {
+            ctx.strokeRect(card.x, card.y, card.w, card.h);
+        }
     }
 
     hover(x, y) {
+        let hoverPoint = new Point(x, y);
 
+        for (let card of this.cards) {
+            if (hoverPoint.overlaps(card)) {
+                card.onHover(x, y);
+            }
+        }
     }
 
     click(x, y) {
-        console.log(x, y);
+
+        let clickPoint = new Point(x, y);
+
+        for (let card of this.cards) {
+            if (clickPoint.overlaps(card)) {
+                card.onClick(x, y);
+            }
+        }
     }
 }
