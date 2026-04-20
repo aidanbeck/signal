@@ -5,7 +5,7 @@ import { Card, Scene } from './Scene.js';
 import RadarScreen from '../src/RadarScreen.js';
 
 import { ships, abilityVisual } from './state.js';
-import { moveSound } from './audio.js';
+import { move } from './audio.js';
 import {
     distanceAbility,
     bouyAbility,
@@ -56,7 +56,7 @@ function radarClick(x, y) {
 
     radarMouse.x = radarX;
     radarMouse.y = radarY;
-    let newMoveSound = moveSound.cloneNode(); // !!! unoptomized
+    let newMoveSound = move.cloneNode(); // !!! unoptomized
     newMoveSound.volume = 0.05;
     newMoveSound.play();
 

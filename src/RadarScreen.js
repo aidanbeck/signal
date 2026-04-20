@@ -5,7 +5,7 @@ vignette.src = "./art/environment/computerscene_screenoverlay_vignette.png";
 
 export default class RadarScreen {
 
-    constructor(canvas, ships, mouse, abilityVisual, gridWidth = 12, gridHeight = 8, tileSizePixels = 50) {
+    constructor(canvas, ships, mouse, abilityVisual, gridWidth = 16, gridHeight = 12, tileSizePixels = 50) {
 
         this.canvas = canvas
         this.ctx = canvas.getContext("2d");
