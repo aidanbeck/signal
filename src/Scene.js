@@ -44,6 +44,7 @@ export class Scene {
     }
 
     hover(x, y, ctx) {
+        document.body.style.cursor = `url('./art/ui/hand.png') -16 -16, auto`;
         let hoverPoint = new Point(x, y);
 
         for (let card of this.cards) {

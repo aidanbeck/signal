@@ -21,6 +21,9 @@ FOLDERS:
 	
 	-drawmapscene
 		1 frame
+	
+	-tutorialscene
+		1 frame
 
 	-computerscene
 		1 frame

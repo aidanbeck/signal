@@ -1,7 +1,11 @@
 import Theatre from '../easel/Theatre.js';
 import Texture from '../easel/Texture.js';
+
 let vignette = new Image();
 vignette.src = "./art/environment/computerscene_screenoverlay_vignette.png";
+
+let cursor = new Image();
+cursor.src = './art/ui/cursor.png';
 
 export default class RadarScreen {
 
@@ -110,6 +114,7 @@ export default class RadarScreen {
         this.ctx.beginPath();
         this.ctx.moveTo(this.ships[0].x, this.ships[0].y);
         this.ctx.lineTo(this.mouse.x, this.mouse.y);
+
         this.ctx.stroke();
     }
 

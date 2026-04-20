@@ -39,6 +39,11 @@ let SCENES = [];
 export let currentScene;
 
 
+// Cursor
+function setCursor(cursorName, offsetX = 0, offsetY = 0) {
+    document.body.style.cursor = `url('./art/ui/${cursorName}'), auto`;
+}
+
 
 // COMPUTER SCENE
 const computerScene = new Scene("./art/environment/computerscene.png");
@@ -83,6 +88,7 @@ function radarClick(x, y) {
     ships[0].v.addVelocity(boost);
 }
 function radarHover(x, y) {
+     setCursor("cursor.png");
 
     let radarX = x + ships[0].x - radarImageOffset.x - radarCanvas.width / 2;
     let radarY = y + ships[0].y - radarImageOffset.y - radarCanvas.height / 2;
@@ -116,9 +122,9 @@ let computerOverlayCard = new Card(
 computerScene.cards.push(computerOverlayCard);
 
 // Navigation Cards
-computerScene.cards.push(new Card(0, 0, 180, 480, null, () => { currentScene = mainScene }));
-computerScene.cards.push(new Card(720, 0, 180, 480, null, () => { currentScene = mainScene }));
-computerScene.cards.push(new Card(180, 433, 540, 47, null, () => { currentScene = mainScene }));
+computerScene.cards.push(new Card(0, 0, 180, 480, null, () => { currentScene = mainScene }, () => {setCursor("down.png", -16, -64)} ));
+computerScene.cards.push(new Card(720, 0, 180, 480, null, () => { currentScene = mainScene }, () => {setCursor("down.png", -16, -64)} ));
+computerScene.cards.push(new Card(180, 433, 540, 47, null, () => { currentScene = mainScene }, () => {setCursor("down.png", -16, -64)} ));
 
 
 
@@ -156,14 +162,14 @@ let mainOverlayCard = new Card(
 mainScene.cards.push(mainOverlayCard);
 
 //Navigation Cards
-mainScene.cards.push(new Card(330, 170, 222, 256, null, () => { currentScene = computerScene }));
-mainScene.cards.push(new Card(575, 240, 280, 220, null, () => { currentScene = abilityConsoleScene }));
+mainScene.cards.push(new Card(330, 170, 222, 256, null, () => { currentScene = computerScene }, () => {setCursor("hand_hover.png", -16, -64)} ));
+mainScene.cards.push(new Card(575, 240, 280, 220, null, () => { currentScene = abilityConsoleScene }, () => {setCursor("hand_hover.png", -16, -64)} ));
 mainScene.cards.push(new Card(140, 291, 170, 100, null, () => {
     launchPreviousScene = currentScene;
     currentScene = launchScene;
-}));
-mainScene.cards.push(new Card(0, 0, 265, 290, null, () => { currentScene = mapScene }));
-mainScene.cards.push(new Card(0, 290, 140, 310, null, () => { currentScene = mapScene }));
+}, () => {setCursor("hand_hover.png", -16, -64)} ));
+mainScene.cards.push(new Card(0, 0, 265, 290, null, () => { currentScene = mapScene }, () => {setCursor("left.png", -16, -64)} ));
+mainScene.cards.push(new Card(0, 290, 140, 310, null, () => { currentScene = mapScene }, () => {setCursor("left.png", -16, -64)} ));
 
 
 
@@ -189,7 +195,7 @@ abilityConsoleScene.cards.push(new Card(240, 270, 75, 75, null, () => { // left 
     newSound.volume = 0.05;
     newSound.play();
 
-}));
+}, () => {setCursor("hand_hover.png", -16, -64)} ));
 
 abilityConsoleScene.cards.push(new Card(323, 270, 100, 75, null, () => { // enter
     abilityConsoleScene.frame = 2;
@@ -233,7 +239,7 @@ abilityConsoleScene.cards.push(new Card(323, 270, 100, 75, null, () => { // ente
 
     abilityOverlayCard.frame = 9;
 
-}));
+}, () => {setCursor("hand_hover.png", -16, -64)} ));
 
 abilityConsoleScene.cards.push(new Card(430, 270, 75, 75, null, () => { // right button
     
@@ -244,11 +250,11 @@ abilityConsoleScene.cards.push(new Card(430, 270, 75, 75, null, () => { // right
     newSound.volume = 0.05;
     newSound.play();
 
-}));
+}, () => {setCursor("hand_hover.png", -16, -64)} ));
 
 // Navigate Back
-abilityConsoleScene.cards.push(new Card(0, 0, 222, 480, null, () => { currentScene = mainScene }));
-abilityConsoleScene.cards.push(new Card(222, 0, 854, 200, null, () => { currentScene = mainScene }));
+abilityConsoleScene.cards.push(new Card(0, 0, 222, 480, null, () => { currentScene = mainScene }, () => {setCursor("down.png", -16, -64)} ));
+abilityConsoleScene.cards.push(new Card(222, 0, 854, 200, null, () => { currentScene = mainScene }, () => {setCursor("down.png", -16, -64)} ));
 
 
 
@@ -317,27 +323,27 @@ function launch() {
 }
 
 // Buttons
-launchScene.cards.push(new Card(300, 270, 30, 30, null, () => { keyPad(1) }));
-launchScene.cards.push(new Card(332, 270, 30, 30, null, () => { keyPad(2) }));
-launchScene.cards.push(new Card(364, 270, 30, 30, null, () => { keyPad(3) }));
+launchScene.cards.push(new Card(300, 270, 32, 32, null, () => { keyPad(1) }, () => {setCursor("hand_hover_click.png", -16, -64)} ));
+launchScene.cards.push(new Card(332, 270, 32, 32, null, () => { keyPad(2) }, () => {setCursor("hand_hover_click.png", -16, -64)} ));
+launchScene.cards.push(new Card(364, 270, 32, 32, null, () => { keyPad(3) }, () => {setCursor("hand_hover_click.png", -16, -64)} ));
 
-launchScene.cards.push(new Card(300, 302, 30, 30, null, () => { keyPad(4) }));
-launchScene.cards.push(new Card(332, 302, 30, 30, null, () => { keyPad(5) }));
-launchScene.cards.push(new Card(364, 302, 30, 30, null, () => { keyPad(6) }));
+launchScene.cards.push(new Card(300, 302, 32, 32, null, () => { keyPad(4) }, () => {setCursor("hand_hover_click.png", -16, -64)} ));
+launchScene.cards.push(new Card(332, 302, 32, 32, null, () => { keyPad(5) }, () => {setCursor("hand_hover_click.png", -16, -64)} ));
+launchScene.cards.push(new Card(364, 302, 32, 32, null, () => { keyPad(6) }, () => {setCursor("hand_hover_click.png", -16, -64)} ));
 
-launchScene.cards.push(new Card(300, 334, 30, 30, null, () => { keyPad(7) }));
-launchScene.cards.push(new Card(332, 334, 30, 30, null, () => { keyPad(8) }));
-launchScene.cards.push(new Card(364, 334, 30, 30, null, () => { keyPad(9) }));
+launchScene.cards.push(new Card(300, 334, 32, 32, null, () => { keyPad(7) }, () => {setCursor("hand_hover_click.png", -16, -64)} ));
+launchScene.cards.push(new Card(332, 334, 32, 32, null, () => { keyPad(8) }, () => {setCursor("hand_hover_click.png", -16, -64)} ));
+launchScene.cards.push(new Card(364, 334, 32, 32, null, () => { keyPad(9) }, () => {setCursor("hand_hover_click.png", -16, -64)} ));
 
-launchScene.cards.push(new Card(332, 366, 30, 30, null, () => { keyPad(0) }));
-launchScene.cards.push(new Card(364, 366, 30, 30, null, () => { keyPad(-1) }));
+launchScene.cards.push(new Card(332, 366, 32, 32, null, () => { keyPad(0) }, () => {setCursor("hand_hover_click.png", -16, -64)} ));
+launchScene.cards.push(new Card(364, 366, 32, 32, null, () => { keyPad(-1) }, () => {setCursor("hand_hover_click.png", -16, -64)} ));
 
-launchScene.cards.push(new Card(430, 180, 164, 180, null, () => { launch() }));
+launchScene.cards.push(new Card(430, 180, 164, 180, null, () => { launch() }, () => {setCursor("hand_hover.png", -16, -64)} ));
 
 // Go Back
-launchScene.cards.push(new Card(215, 410, 453, 69, null, () => { currentScene = launchPreviousScene }));
-launchScene.cards.push(new Card(0, 0, 215, 480, null, () => { currentScene = launchPreviousScene }));
-launchScene.cards.push(new Card(668, 0, 186, 480, null, () => { currentScene = launchPreviousScene }));
+launchScene.cards.push(new Card(215, 410, 453, 69, null, () => { currentScene = launchPreviousScene }, () => {setCursor("down.png", -16, -64)} ));
+launchScene.cards.push(new Card(0, 0, 215, 480, null, () => { currentScene = launchPreviousScene }, () => {setCursor("down.png", -16, -64)} ));
+launchScene.cards.push(new Card(668, 0, 186, 480, null, () => { currentScene = launchPreviousScene }, () => {setCursor("down.png", -16, -64)} ));
 
 
 
@@ -345,12 +351,12 @@ launchScene.cards.push(new Card(668, 0, 186, 480, null, () => { currentScene = l
 const mapScene = new Scene("./art/environment/mapscene.png", 854);
 SCENES.push(mapScene);
 
-mapScene.cards.push(new Card(720, 0, 134, 480, null, () => { currentScene = mainScene }));
+mapScene.cards.push(new Card(720, 0, 134, 480, null, () => { currentScene = mainScene }, () => {setCursor("right.png", -16, -64)} ));
 mapScene.cards.push(new Card(575, 222, 144, 75, null, () => {
     launchPreviousScene = currentScene;
     currentScene = launchScene;
-}));
-mapScene.cards.push(new Card(111, 245, 345, 222, null, () => { currentScene = drawMapScene }));
+}, () => {setCursor("hand_hover.png", -16, -64)} ));
+mapScene.cards.push(new Card(111, 245, 345, 222, null, () => { currentScene = drawMapScene }, () => {setCursor("hand_hover_click.png", -16, -64)} ));
 
 
 
@@ -372,6 +378,9 @@ function mapClick(ctx) {
 let drawingSound = drawing.cloneNode();
 drawingSound.loop = true;
 function mapHover(x, y, ctx) {
+
+    setCursor("pencil.png", -16, -64);
+    // setCursor("eraser.png", -16, -64);
 
     ctx.strokeStyle = "black";
 
@@ -433,5 +442,5 @@ function mapRender(ctx) {
 
 
 // Navigation
-drawMapScene.cards.push(new Card(0, 0, 150, 480, null, () => { currentScene = mapScene }));
-drawMapScene.cards.push(new Card(700, 0, 154, 480, null, () => { currentScene = mapScene }));
+drawMapScene.cards.push(new Card(0, 0, 150, 480, null, () => { currentScene = mapScene }, () => {setCursor("down.png", -16, -64)} ));
+drawMapScene.cards.push(new Card(700, 0, 154, 480, null, () => { currentScene = mapScene }, () => {setCursor("down.png", -16, -64)} ));
