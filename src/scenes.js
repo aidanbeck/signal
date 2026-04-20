@@ -10,11 +10,10 @@ import { moveSound } from './audio.js';
 // SCENES
 let SCENES = [];
 export let currentScene;
-export function getCurrentScene() {
-    return currentScene;
-}
 
-// Computer Scene
+
+
+// COMPUTER SCENE
 const computerScene = new Scene("./art/environment/computerscene.png");
 SCENES.push(computerScene);
 currentScene = SCENES[0];
@@ -88,9 +87,46 @@ let computerOverlayCard = new Card(
 )
 computerScene.cards.push(computerOverlayCard);
 
-// Back Cards
-function goBack(x, y) {
-    console.log("back"); // TODO change current scene
-} 
-computerScene.cards.push(new Card(0, 0, 180, 480, null, goBack));
-computerScene.cards.push(new Card(720, 0, 180, 480, null, goBack));
+// Navigation Cards
+computerScene.cards.push(new Card(0, 0, 180, 480, null, () => { currentScene = mainScene }));
+computerScene.cards.push(new Card(720, 0, 180, 480, null, () => { currentScene = mainScene }));
+
+
+
+// MAIN SCENE
+const mainScene = new Scene("./art/environment/mainscene.png", 854);
+SCENES.push(mainScene);
+
+// Radar Card
+let smallRadarCard = new Card(
+    379, 188, 147, 124);
+    smallRadarCard.customRender = radarSmallRender;
+function radarSmallRender(ctx) {
+
+    radarScreen.render();
+    ctx.fillRect(379, 188, 147, 124);
+
+    ctx.save();
+    ctx.globalCompositeOperation = "lighter";
+    ctx.filter = "blur(5px)";
+    ctx.drawImage(radarScreen.canvas, 379, 188, 147, 124);
+    ctx.filter = "none";
+    ctx.globalCompositeOperation = "source-over";
+    ctx.drawImage(radarScreen.canvas, 379, 188, 147, 124);
+    ctx.restore();
+}
+mainScene.cards.push(smallRadarCard);
+
+// Overlay Card
+let mainOverlayCard = new Card(
+    379, 188, 147, 124,
+    new Texture("./art/environment/mainscene_frame0_screenoverlay.png")
+)
+mainScene.cards.push(mainOverlayCard);
+
+//Navigation Cards
+mainScene.cards.push(new Card(330, 170, 222, 256, null, () => { currentScene = computerScene }));
+mainScene.cards.push(new Card(575, 240, 280, 220, null, () => { currentScene = null })); // decvices
+mainScene.cards.push(new Card(140, 291, 170, 100, null, () => { currentScene = null })); // keypad
+mainScene.cards.push(new Card(0, 0, 265, 290, null, () => { currentScene = null })); // left
+mainScene.cards.push(new Card(0, 290, 140, 310, null, () => { currentScene = null })); // left

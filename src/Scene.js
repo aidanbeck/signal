@@ -16,8 +16,8 @@ export class Card extends Rectangle {
 
 export class Scene {
 
-    constructor(backgroundImageSrc) {
-        this.backgroundImage = new Texture(backgroundImageSrc);
+    constructor(backgroundImageSrc, frameWidth = null) {
+        this.backgroundImage = new Texture(backgroundImageSrc, frameWidth);
         this.frame = 0;
         this.cards = [];
     }
