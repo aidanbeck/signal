@@ -70,7 +70,8 @@ function radarClick(x, y) {
 
     radarMouse.x = radarX;
     radarMouse.y = radarY;
-    let newMoveSound = move.cloneNode(); // !!! unoptomized
+    let newMoveSound = radarscreenclicking.cloneNode(); // !!! unoptomized
+    newMoveSound.currentTime = 0.3;
     newMoveSound.volume = 0.05;
     newMoveSound.play();
 
