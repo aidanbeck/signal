@@ -1,4 +1,5 @@
 import Ship from '../src/Ship.js';
+import { abilitySound } from "./audio.js";
 
 const ships = [
     new Ship(0, 0, 5, "rgba(0, 200, 0, 0.8)"),

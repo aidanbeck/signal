@@ -5,6 +5,16 @@ import RadarScreen from '../src/RadarScreen.js';
 
 import { ships, abilityVisual } from './state.js';
 import { moveSound } from './audio.js';
+import {
+    distanceAbility,
+    bouyAbility,
+    longitudeAbility,
+    latitudeAbility,
+    radius2kAbility,
+    radius4kAbility,
+    radius8kAbility,
+    launchMissile
+} from './abilities.js';
 
 
 // SCENES
@@ -156,7 +166,41 @@ abilityConsoleScene.cards.push(new Card(240, 270, 75, 75, null, () => { // left 
 
 abilityConsoleScene.cards.push(new Card(323, 270, 100, 75, null, () => { // enter
     abilityConsoleScene.frame = 2;
+    
+
+    switch (abilityOverlayCard.frame) {
+        case 0:
+            longitudeAbility();
+            break;
+        case 1:
+            latitudeAbility();
+            break;
+        case 2:
+            radius2kAbility();
+            break;
+        case 3: 
+            radius4kAbility();
+            break;
+        case 4:
+            radius8kAbility();
+            break;
+        case 5:
+            distanceAbility();
+            break;
+        case 6:
+            /* intersect */
+            break;
+        case 7:
+            bouyAbility();
+            break;
+        case 8:
+            /* heat */
+            break;
+
+    }
+
     abilityOverlayCard.frame = 9;
+
 }));
 
 abilityConsoleScene.cards.push(new Card(430, 270, 75, 75, null, () => { // right button

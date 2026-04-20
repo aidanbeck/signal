@@ -88,15 +88,13 @@ function launchMissile() {
   !hits && setAbilityVisual({ type: "miss", text: "You missed."});
 }
 
-function addListener(id, func) {
-    document.getElementById(id).addEventListener("click", func);
+export {
+    distanceAbility,
+    bouyAbility,
+    longitudeAbility,
+    latitudeAbility,
+    radius2kAbility,
+    radius4kAbility,
+    radius8kAbility,
+    launchMissile
 }
-
-addListener("distanceAbility", distanceAbility);
-addListener("bouyAbility", bouyAbility);
-addListener("longitudeAbility", longitudeAbility);
-addListener("latitudeAbility", latitudeAbility);
-addListener("radius2kAbility", radius2kAbility);
-addListener("radius4kAbility", radius4kAbility);
-addListener("radius8kAbility", radius8kAbility);
-addListener("launchMissile", launchMissile);
