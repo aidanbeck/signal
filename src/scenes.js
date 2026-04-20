@@ -137,8 +137,8 @@ mainScene.cards.push(mainOverlayCard);
 
 //Navigation Cards
 mainScene.cards.push(new Card(330, 170, 222, 256, null, () => { currentScene = computerScene }));
-mainScene.cards.push(new Card(575, 240, 280, 220, null, () => { currentScene = abilityConsoleScene })); // decvices
-mainScene.cards.push(new Card(140, 291, 170, 100, null, () => { currentScene = null })); // keypad
+mainScene.cards.push(new Card(575, 240, 280, 220, null, () => { currentScene = abilityConsoleScene }));
+mainScene.cards.push(new Card(140, 291, 170, 100, null, () => { currentScene = launchScene }));
 mainScene.cards.push(new Card(0, 0, 265, 290, null, () => { currentScene = null })); // left
 mainScene.cards.push(new Card(0, 290, 140, 310, null, () => { currentScene = null })); // left
 
@@ -213,3 +213,81 @@ abilityConsoleScene.cards.push(new Card(430, 270, 75, 75, null, () => { // right
 // Navigate Back
 abilityConsoleScene.cards.push(new Card(0, 0, 222, 480, null, () => { currentScene = mainScene }));
 abilityConsoleScene.cards.push(new Card(222, 0, 854, 200, null, () => { currentScene = mainScene }));
+
+
+
+// LAUNCH SCENE
+const launchScene = new Scene("./art/environment/launchscene.png", 854);
+SCENES.push(launchScene);
+
+// launchScreen Overlay
+// Overlay Card
+let launchSceneOverlayCard = new Card(
+    315, 194, 67, 38,
+    new Texture("./art/environment/launchscene_screenoverlay.png", 67)
+)
+launchScene.cards.push(launchSceneOverlayCard);
+
+let launchCode = "";
+function keyPad(number) {
+    
+    if (number == 0) {
+        launchScene.frame = 2;
+        launchCode += "0";
+    }
+    else if (number == -1) { // backspace
+        launchScene.frame = 1;
+        launchCode = launchCode.slice(0, -1);
+    } else {
+        launchScene.frame = 12 - number;
+        launchCode += `${number}`;
+    }
+
+    if (launchCode.length > 4) {
+        launchCode = launchCode.charAt(4);
+    }
+}
+
+function renderLaunchCode() {
+
+}
+let launchCodeOverlayCard = new Card(315, 194, 67, 38);
+launchCodeOverlayCard.customRender = (ctx) => {
+
+    ctx.font = "30px Consolas";
+
+    ctx.fillText(launchCode, 315, 194+30);
+}
+launchScene.cards.push(launchCodeOverlayCard);
+
+function launch() {
+    launchScene.frame = 12;
+
+    let x = Number(launchCode.slice(0, 2));
+    let y = Number(launchCode.slice(2, 4));
+    launchMissile(x, y);
+    launchCode = "";
+}
+
+// Buttons
+launchScene.cards.push(new Card(300, 270, 30, 30, null, () => { keyPad(1) }));
+launchScene.cards.push(new Card(332, 270, 30, 30, null, () => { keyPad(2) }));
+launchScene.cards.push(new Card(364, 270, 30, 30, null, () => { keyPad(3) }));
+
+launchScene.cards.push(new Card(300, 302, 30, 30, null, () => { keyPad(4) }));
+launchScene.cards.push(new Card(332, 302, 30, 30, null, () => { keyPad(5) }));
+launchScene.cards.push(new Card(364, 302, 30, 30, null, () => { keyPad(6) }));
+
+launchScene.cards.push(new Card(300, 334, 30, 30, null, () => { keyPad(7) }));
+launchScene.cards.push(new Card(332, 334, 30, 30, null, () => { keyPad(8) }));
+launchScene.cards.push(new Card(364, 334, 30, 30, null, () => { keyPad(9) }));
+
+launchScene.cards.push(new Card(332, 366, 30, 30, null, () => { keyPad(0) }));
+launchScene.cards.push(new Card(364, 366, 30, 30, null, () => { keyPad(-1) }));
+
+launchScene.cards.push(new Card(430, 180, 164, 180, null, () => { launch() }));
+
+// Go Back
+launchScene.cards.push(new Card(215, 410, 453, 69, null, () => { currentScene = mainScene }));
+launchScene.cards.push(new Card(0, 0, 215, 480, null, () => { currentScene = mainScene }));
+launchScene.cards.push(new Card(668, 0, 186, 480, null, () => { currentScene = mainScene }));

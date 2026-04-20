@@ -79,9 +79,7 @@ function radius8kAbility() {
  radiusAbility(8);
 }
 
-function launchMissile() {
-  let x = document.getElementById("xInput").value;
-  let y = document.getElementById("yInput").value;
+function launchMissile(x, y) {
   let hits = SUB.hits(x, y);
 
   hits && setAbilityVisual({ type: "hit", text: "You hit the sub!"});
