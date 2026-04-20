@@ -138,9 +138,12 @@ mainScene.cards.push(mainOverlayCard);
 //Navigation Cards
 mainScene.cards.push(new Card(330, 170, 222, 256, null, () => { currentScene = computerScene }));
 mainScene.cards.push(new Card(575, 240, 280, 220, null, () => { currentScene = abilityConsoleScene }));
-mainScene.cards.push(new Card(140, 291, 170, 100, null, () => { currentScene = launchScene }));
-mainScene.cards.push(new Card(0, 0, 265, 290, null, () => { currentScene = null })); // left
-mainScene.cards.push(new Card(0, 290, 140, 310, null, () => { currentScene = null })); // left
+mainScene.cards.push(new Card(140, 291, 170, 100, null, () => {
+    launchPreviousScene = currentScene;
+    currentScene = launchScene;
+}));
+mainScene.cards.push(new Card(0, 0, 265, 290, null, () => { currentScene = mapScene }));
+mainScene.cards.push(new Card(0, 290, 140, 310, null, () => { currentScene = mapScene }));
 
 
 
@@ -252,6 +255,7 @@ function renderLaunchCode() {
 
 }
 let launchCodeOverlayCard = new Card(315, 194, 67, 38);
+let launchPreviousScene = null;
 launchCodeOverlayCard.customRender = (ctx) => {
 
     ctx.font = "30px Consolas";
@@ -288,6 +292,19 @@ launchScene.cards.push(new Card(364, 366, 30, 30, null, () => { keyPad(-1) }));
 launchScene.cards.push(new Card(430, 180, 164, 180, null, () => { launch() }));
 
 // Go Back
-launchScene.cards.push(new Card(215, 410, 453, 69, null, () => { currentScene = mainScene }));
-launchScene.cards.push(new Card(0, 0, 215, 480, null, () => { currentScene = mainScene }));
-launchScene.cards.push(new Card(668, 0, 186, 480, null, () => { currentScene = mainScene }));
+launchScene.cards.push(new Card(215, 410, 453, 69, null, () => { currentScene = launchPreviousScene }));
+launchScene.cards.push(new Card(0, 0, 215, 480, null, () => { currentScene = launchPreviousScene }));
+launchScene.cards.push(new Card(668, 0, 186, 480, null, () => { currentScene = launchPreviousScene }));
+
+
+
+// MAP SCENE
+const mapScene = new Scene("./art/environment/mapscene.png", 854);
+SCENES.push(mapScene);
+
+mapScene.cards.push(new Card(720, 0, 134, 480, null, () => { currentScene = mainScene }));
+mapScene.cards.push(new Card(575, 222, 144, 75, null, () => {
+    launchPreviousScene = currentScene;
+    currentScene = launchScene;
+}));
+mapScene.cards.push(new Card(111, 245, 345, 222, null, () => { currentScene = drawMapScene }));
