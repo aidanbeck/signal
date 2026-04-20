@@ -1,4 +1,7 @@
 import Theatre from '../easel/Theatre.js';
+import Texture from '../easel/Texture.js';
+let vignette = new Image();
+vignette.src = "./art/environment/computerscene_screenoverlay_vignette.png";
 
 export default class RadarScreen {
 
@@ -28,11 +31,17 @@ export default class RadarScreen {
         this.lineToMouse();
         this.renderShips();
         this.renderAbilityVisual();
-        this.renderGridLabels();
         this.renderText();
+        this.renderGridLabels();
+        this.ctx.drawImage(vignette, player.x - this.canvas.width/2, player.y - this.canvas.height / 2);
+
+        
+
         
 
         this.ctx.restore();
+        
+
     
     }
 
@@ -70,6 +79,7 @@ export default class RadarScreen {
         let gridWidth = this.gridWidth - 1;
         let gridHeight = this.gridHeight;
         let ctx = this.ctx;
+        this.ctx.font = "bold 12px Consolas";
         ctx.fillStyle = "rgb(140,170,170)";
 
         // label rows
