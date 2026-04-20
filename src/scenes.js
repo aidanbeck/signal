@@ -5,7 +5,21 @@ import { Card, Scene } from './Scene.js';
 import RadarScreen from '../src/RadarScreen.js';
 
 import { ships, abilityVisual } from './state.js';
-import { move } from './audio.js';
+import {
+    move,
+    notif,
+    abilityConsoleClick,
+    acceptStatus,
+    drawing,
+    launchbutton,
+    miss,
+    missilelaunch,
+    radarscreenclicking,
+    successhit,
+
+    numpads
+} from './audio.js';
+
 import {
     distanceAbility,
     bouyAbility,
@@ -170,6 +184,10 @@ abilityConsoleScene.cards.push(new Card(240, 270, 75, 75, null, () => { // left 
     abilityConsoleScene.frame = 1;
     abilityOverlayCard.frame > 0 && abilityOverlayCard.frame--;
 
+    let newSound = abilityConsoleClick.cloneNode(); // !!! unoptomized
+    newSound.volume = 0.05;
+    newSound.play();
+
 }));
 
 abilityConsoleScene.cards.push(new Card(323, 270, 100, 75, null, () => { // enter
@@ -207,6 +225,11 @@ abilityConsoleScene.cards.push(new Card(323, 270, 100, 75, null, () => { // ente
 
     }
 
+    let newSound = notif.cloneNode(); // !!! unoptomized
+    newSound.currentTime = 0.4;
+    newSound.volume = 0.05;
+    newSound.play();
+
     abilityOverlayCard.frame = 9;
 
 }));
@@ -215,6 +238,10 @@ abilityConsoleScene.cards.push(new Card(430, 270, 75, 75, null, () => { // right
     
     abilityConsoleScene.frame = 3;
     abilityOverlayCard.frame < 8 && abilityOverlayCard.frame++;
+
+    let newSound = abilityConsoleClick.cloneNode(); // !!! unoptomized
+    newSound.volume = 0.05;
+    newSound.play();
 
 }));
 
@@ -254,6 +281,10 @@ function keyPad(number) {
     if (launchCode.length > 4) {
         launchCode = launchCode.charAt(4);
     }
+
+    let newSound = numpads[launchCode.length - 1].cloneNode(); // !!! unoptomized
+    newSound.volume = 0.05;
+    newSound.play();
 }
 
 let launchCodeOverlayCard = new Card(315, 194, 67, 38);
@@ -273,6 +304,15 @@ function launch() {
     let y = Number(launchCode.slice(2, 4));
     launchMissile(x, y);
     launchCode = "";
+
+    let newSound = launchbutton.cloneNode(); // !!! unoptomized
+    newSound.volume = 0.05;
+    newSound.play();
+
+    let newerSound = missilelaunch.cloneNode(); // !!! unoptomized
+    newerSound.currentTime = -1;
+    newerSound.volume = 0.05;
+    newerSound.play();
 }
 
 // Buttons
@@ -328,6 +368,8 @@ function mapClick(ctx) {
 
 }
 
+let drawingSound = drawing.cloneNode();
+drawingSound.loop = true;
 function mapHover(x, y, ctx) {
 
     ctx.strokeStyle = "black";
@@ -335,8 +377,11 @@ function mapHover(x, y, ctx) {
     if (!mouseDown) {
         ctx.moveTo(x, y);
         newLine = true;
+
+        drawingSound.pause();
         return;
     }
+    drawingSound.play();
 
     // if (!leftClick) {
 

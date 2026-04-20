@@ -10,8 +10,8 @@ const ships = [
 let abilityVisual = { text: ""};
 
 function setAbilityVisual(visual) {
-    notif.play();
-    notif.currentTime = 0.4;
+    // notif.play();
+    // notif.currentTime = 0.4;
     Object.assign(abilityVisual, visual);
 }
 

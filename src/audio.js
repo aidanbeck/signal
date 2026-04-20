@@ -3,7 +3,7 @@ let trackStarted = false;
 function startTrack() {
     if (trackStarted) { return; }
     
-    backgroundMusic.volume = 0.6;
+    // backgroundMusic.volume = 1;
     backgroundMusic.loop = true;
     backgroundMusic.play();
     trackStarted = true;

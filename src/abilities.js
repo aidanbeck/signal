@@ -1,4 +1,18 @@
 import { ships, setAbilityVisual } from "./state.js";
+import {
+    move,
+    notif,
+    abilityConsoleClick,
+    acceptStatus,
+    drawing,
+    launchbutton,
+    miss,
+    missilelaunch,
+    radarscreenclicking,
+    successhit,
+
+    numpads
+} from './audio.js';
 
 const SHIP = ships[0];
 const SUB = ships[1];
@@ -82,8 +96,22 @@ function radius8kAbility() {
 function launchMissile(x, y) {
   let hits = SUB.hits(x, y);
 
-  hits && setAbilityVisual({ type: "hit", text: "You hit the sub!"});
-  !hits && setAbilityVisual({ type: "miss", text: "You missed."});
+  if (hits) {
+    setAbilityVisual({ type: "hit", text: "You hit the sub!"});
+
+    let newSound = successhit.cloneNode(); // !!! unoptomized
+    newSound.currentTime = -2;
+    // newSound.volume = 0.05;
+    newSound.play();
+  } else {
+    setAbilityVisual({ type: "miss", text: "You missed."});
+
+    let newSound = miss.cloneNode(); // !!! unoptomized
+    newSound.currentTime = -5;
+    // newSound.volume = 0.05;
+    newSound.play();
+  }
+
 }
 
 export {
