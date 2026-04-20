@@ -96,6 +96,7 @@ computerScene.cards.push(new Card(720, 0, 180, 480, null, () => { currentScene =
 // MAIN SCENE
 const mainScene = new Scene("./art/environment/mainscene.png", 854);
 SCENES.push(mainScene);
+currentScene = mainScene;
 
 // Radar Card
 let smallRadarCard = new Card(
@@ -126,7 +127,45 @@ mainScene.cards.push(mainOverlayCard);
 
 //Navigation Cards
 mainScene.cards.push(new Card(330, 170, 222, 256, null, () => { currentScene = computerScene }));
-mainScene.cards.push(new Card(575, 240, 280, 220, null, () => { currentScene = null })); // decvices
+mainScene.cards.push(new Card(575, 240, 280, 220, null, () => { currentScene = abilityConsoleScene })); // decvices
 mainScene.cards.push(new Card(140, 291, 170, 100, null, () => { currentScene = null })); // keypad
 mainScene.cards.push(new Card(0, 0, 265, 290, null, () => { currentScene = null })); // left
 mainScene.cards.push(new Card(0, 290, 140, 310, null, () => { currentScene = null })); // left
+
+
+
+// ABILITY CONSOLE SCENE
+const abilityConsoleScene = new Scene("./art/environment/abilityconsolescene.png", 854);
+SCENES.push(abilityConsoleScene);
+
+// Overlay Card
+let abilityOverlayCard = new Card(
+    534, 245, 200, 154,
+    new Texture("./art/environment/abilityconsolescene_screenoverlay.png", 200) // could add custom onclick stuff
+)
+abilityConsoleScene.cards.push(abilityOverlayCard);
+
+// Buttons
+
+abilityConsoleScene.cards.push(new Card(240, 270, 75, 75, null, () => { // left button
+    
+    abilityConsoleScene.frame = 1;
+    abilityOverlayCard.frame > 0 && abilityOverlayCard.frame--;
+
+}));
+
+abilityConsoleScene.cards.push(new Card(323, 270, 100, 75, null, () => { // enter
+    abilityConsoleScene.frame = 2;
+    abilityOverlayCard.frame = 9;
+}));
+
+abilityConsoleScene.cards.push(new Card(430, 270, 75, 75, null, () => { // right button
+    
+    abilityConsoleScene.frame = 3;
+    abilityOverlayCard.frame < 8 && abilityOverlayCard.frame++;
+
+}));
+
+// Navigate Back
+abilityConsoleScene.cards.push(new Card(0, 0, 222, 480, null, () => { currentScene = mainScene }));
+abilityConsoleScene.cards.push(new Card(222, 0, 854, 200, null, () => { currentScene = mainScene }));

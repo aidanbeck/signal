@@ -64,4 +64,3 @@ setInterval(physics, 20);
 globalThis.SHIPS = ships;
 globalThis.ABILITYVISUAL = abilityVisual;
 globalThis.THEATRE = theatre;
-// globalThis.SCENE = computerScene;
