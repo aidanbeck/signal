@@ -1,4 +1,4 @@
-import { ships, setAbilityVisual } from "./main.js";
+import { ships, setAbilityVisual } from "./state.js";
 
 const SHIP = ships[0];
 const SUB = ships[1];
