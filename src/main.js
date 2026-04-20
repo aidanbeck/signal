@@ -19,14 +19,24 @@ theatre.addEventListener("contextmenu", (e) => e.preventDefault());
 theatre.addEventListener("pointermove", mouseMove);
 theatre.addEventListener("pointerdown", onClick);
 
+export let mouseDown = false;
+export let leftClick = false;
+theatre.addEventListener("pointerdown", () => {
+    mouseDown = true;
+    if (event.button === 0) { leftClick = true } else { leftClick = false; }
+});
+theatre.addEventListener("pointerup", () => {
+    mouseDown = false
+});
+
 function mouseMove(event) {
     let {x, y} = theatre.getEventCoordinates(event);
-    currentScene.hover(x, y);
+    currentScene.hover(x, y, theatre.ctx);
 }
 
 function onClick(event) {
     let {x, y} = theatre.getEventCoordinates(event);
-    currentScene.click(x, y);
+    currentScene.click(x, y, theatre.ctx);
     startTrack(); // !!! for audio, start on first click
 }
 

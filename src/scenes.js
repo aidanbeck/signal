@@ -1,5 +1,6 @@
 import Texture from '../easel/Texture.js';
 import Velocity from '../easel/Velocity.js';
+import { Circle, Point } from '../easel/Shape.js';
 import { Card, Scene } from './Scene.js';
 import RadarScreen from '../src/RadarScreen.js';
 
@@ -15,6 +16,8 @@ import {
     radius8kAbility,
     launchMissile
 } from './abilities.js';
+
+import { mouseDown, leftClick } from './main.js';
 
 
 // SCENES
@@ -100,6 +103,8 @@ computerScene.cards.push(computerOverlayCard);
 // Navigation Cards
 computerScene.cards.push(new Card(0, 0, 180, 480, null, () => { currentScene = mainScene }));
 computerScene.cards.push(new Card(720, 0, 180, 480, null, () => { currentScene = mainScene }));
+computerScene.cards.push(new Card(180, 433, 540, 47, null, () => { currentScene = mainScene }));
+
 
 
 
@@ -251,9 +256,6 @@ function keyPad(number) {
     }
 }
 
-function renderLaunchCode() {
-
-}
 let launchCodeOverlayCard = new Card(315, 194, 67, 38);
 let launchPreviousScene = null;
 launchCodeOverlayCard.customRender = (ctx) => {
@@ -308,3 +310,82 @@ mapScene.cards.push(new Card(575, 222, 144, 75, null, () => {
     currentScene = launchScene;
 }));
 mapScene.cards.push(new Card(111, 245, 345, 222, null, () => { currentScene = drawMapScene }));
+
+
+
+// DRAW MAP SCENE
+const drawMapScene = new Scene("./art/environment/drawmapscene.png", 854);
+SCENES.push(drawMapScene);
+
+let drawingOverlayCard = new Card(179, 64, 495, 352, null, mapClick, mapHover, mapRender);
+drawMapScene.cards.push(drawingOverlayCard);
+
+// State
+let newLine = true;
+const lineSegments = [];
+
+function mapClick(ctx) {
+
+}
+
+function mapHover(x, y, ctx) {
+
+    ctx.strokeStyle = "black";
+
+    if (!mouseDown) {
+        ctx.moveTo(x, y);
+        newLine = true;
+        return;
+    }
+
+    // if (!leftClick) {
+
+    //     let eraser = new Circle(x, y, 10);
+
+    //     let erasedAny = false;
+    //     let erasedPrevious = false;
+    //     for (let i = 0; i < lineSegments.length; i++) {
+            
+    //         if (erasedPrevious) {
+    //             lineSegments[i].newLine = true;
+    //             erasedPrevious = false;
+    //         }
+
+    //         let point = new Point(lineSegments[i].x, lineSegments[i].y);
+
+    //         if (eraser.overlaps(point)) {
+    //             lineSegments.splice(i, 1);
+    //             erasedPrevious = true;
+    //             erasedAny = true;
+    //         }
+    //     }
+
+    //     mapRender(ctx);
+    //     return;
+    // }
+
+    ctx.lineTo(x, y);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+
+    lineSegments.push({x, y, newLine});
+    newLine = false;
+
+}
+
+function mapRender(ctx) {
+    ctx.strokeStyle = "black";
+    ctx.beginPath;
+    for (let lineSegment of lineSegments) {
+        lineSegment.newLine && ctx.moveTo(lineSegment.x, lineSegment.y);
+        !lineSegment.newLine && ctx.lineTo(lineSegment.x, lineSegment.y);
+    }
+    ctx.stroke();
+
+}
+
+
+// Navigation
+drawMapScene.cards.push(new Card(0, 0, 150, 480, null, () => { currentScene = mapScene }));
+drawMapScene.cards.push(new Card(700, 0, 154, 480, null, () => { currentScene = mapScene }));

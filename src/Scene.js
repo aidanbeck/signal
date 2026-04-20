@@ -37,29 +37,29 @@ export class Scene {
         }
 
         //debug show hitboxes
-        ctx.strokeStyle = "red";
-        for (let card of this.cards) {
-            ctx.strokeRect(card.x, card.y, card.w, card.h);
-        }
+        // ctx.strokeStyle = "red";
+        // for (let card of this.cards) {
+        //     ctx.strokeRect(card.x, card.y, card.w, card.h);
+        // }
     }
 
-    hover(x, y) {
+    hover(x, y, ctx) {
         let hoverPoint = new Point(x, y);
 
         for (let card of this.cards) {
             if (hoverPoint.overlaps(card)) {
-                card.onHover(x, y);
+                card.onHover(x, y, ctx);
             }
         }
     }
 
-    click(x, y) {
+    click(x, y, ctx) {
 
         let clickPoint = new Point(x, y);
 
         for (let card of this.cards) {
             if (clickPoint.overlaps(card)) {
-                card.onClick(x, y);
+                card.onClick(x, y, ctx);
             }
         }
     }
