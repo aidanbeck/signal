@@ -20,15 +20,14 @@ theatre.addEventListener("pointermove", mouseMove);
 theatre.addEventListener("pointerdown", onClick);
 
 function mouseMove(event) {
-
     let {x, y} = theatre.getEventCoordinates(event);
     currentScene.hover(x, y);
 }
 
 function onClick(event) {
     let {x, y} = theatre.getEventCoordinates(event);
-    startTrack(); // !!! for audio, start on first click
     currentScene.click(x, y);
+    startTrack(); // !!! for audio, start on first click
 }
 
 
@@ -52,13 +51,6 @@ export function setAbilityVisual(visual) {
 const mouse = { x: 0, y: 0 }
 
 
-// Radar Screen
-const radarCanvas = new OffscreenCanvas(436, 373);
-const radarMouse = { x: 0, y: 0 }
-const radarScreen = new RadarScreen(radarCanvas, ships, radarMouse, abilityVisual);
-for (let ship of ships) {
-    ship.randomizeLocation(radarScreen.gridWidth, radarScreen.gridHeight);
-}
 
 
 // SCENES
@@ -69,6 +61,13 @@ SCENES.push(computerScene);
 currentScene = SCENES[0];
 
 // Radar Card
+// Radar Screen
+const radarCanvas = new OffscreenCanvas(436, 373);
+const radarMouse = { x: 0, y: 0 }
+const radarScreen = new RadarScreen(radarCanvas, ships, radarMouse, abilityVisual);
+for (let ship of ships) {
+    ship.randomizeLocation(radarScreen.gridWidth, radarScreen.gridHeight);
+}
 const radarImageOffset = { x: 228, y: 59}
 let radarCard = new Card(
     radarImageOffset.x, radarImageOffset.y, radarScreen.canvas.width, radarScreen.canvas.height,
@@ -128,6 +127,16 @@ let computerOverlayCard = new Card(
 )
 computerScene.cards.push(computerOverlayCard);
 
+// Back Cards
+function goBack(x, y) {
+    console.log("back"); // TODO change current scene
+} 
+computerScene.cards.push(new Card(0, 0, 180, 480, null, goBack));
+computerScene.cards.push(new Card(720, 0, 180, 480, null, goBack));
+
+
+
+
 
 // Audio
 let trackStarted = false;
@@ -144,7 +153,6 @@ function startTrack() {
     backgroundMusic.play();
     trackStarted = true;
 }
-
 
 // Main Loops
 
