@@ -36,7 +36,7 @@ export class Scene {
             card.texture.draw(card.x, card.y, card.frame, ctx);
         }
 
-        //debug show hitboxes
+        // debug show hitboxes
         // ctx.strokeStyle = "red";
         // for (let card of this.cards) {
         //     ctx.strokeRect(card.x, card.y, card.w, card.h);

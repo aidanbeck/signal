@@ -88,7 +88,8 @@ function radarClick(x, y) {
     ships[0].v.addVelocity(boost);
 }
 function radarHover(x, y) {
-     setCursor("cursor.png");
+    //  setCursor("cursor.png");
+    document.body.style.cursor = "crosshair";
 
     let radarX = x + ships[0].x - radarImageOffset.x - radarCanvas.width / 2;
     let radarY = y + ships[0].y - radarImageOffset.y - radarCanvas.height / 2;
@@ -169,7 +170,13 @@ mainScene.cards.push(new Card(140, 291, 170, 100, null, () => {
     currentScene = launchScene;
 }, () => {setCursor("hand_hover.png", -16, -64)} ));
 mainScene.cards.push(new Card(0, 0, 265, 290, null, () => { currentScene = mapScene }, () => {setCursor("left.png", -16, -64)} ));
-mainScene.cards.push(new Card(0, 290, 140, 310, null, () => { currentScene = mapScene }, () => {setCursor("left.png", -16, -64)} ));
+mainScene.cards.push(new Card(0, 290, 140, 70, null, () => { currentScene = mapScene }, () => {setCursor("left.png", -16, -64)} ));
+mainScene.cards.push(new Card(68, 360, 72, 200, null, () => { currentScene = mapScene }, () => {setCursor("left.png", -16, -64)} ));
+mainScene.cards.push(new Card(0, 414, 72, 200, null, () => { currentScene = mapScene }, () => {setCursor("left.png", -16, -64)} ));
+mainScene.cards.push(new Card(0, 360, 68, 54, null, () => {
+    tutorialPreviousScene = currentScene;
+    currentScene = tutorialScene;
+}, () => {setCursor("hand_hover_click.png", -16, -64)} ));
 
 
 
@@ -357,6 +364,11 @@ mapScene.cards.push(new Card(575, 222, 144, 75, null, () => {
     currentScene = launchScene;
 }, () => {setCursor("hand_hover.png", -16, -64)} ));
 mapScene.cards.push(new Card(111, 245, 345, 222, null, () => { currentScene = drawMapScene }, () => {setCursor("hand_hover_click.png", -16, -64)} ));
+mapScene.cards.push(new Card(500, 250, 50, 30, null, () => {
+    tutorialPreviousScene = currentScene;
+    currentScene = tutorialScene; 
+}, () => {setCursor("hand_hover_click.png", -16, -64)} ));
+
 
 
 
@@ -444,3 +456,13 @@ function mapRender(ctx) {
 // Navigation
 drawMapScene.cards.push(new Card(0, 0, 150, 480, null, () => { currentScene = mapScene }, () => {setCursor("down.png", -16, -64)} ));
 drawMapScene.cards.push(new Card(700, 0, 154, 480, null, () => { currentScene = mapScene }, () => {setCursor("down.png", -16, -64)} ));
+
+
+
+// TUTORIAL SCENE
+const tutorialScene = new Scene("./art/environment/tutorialScene.png", 854);
+SCENES.push(tutorialScene);
+
+let tutorialPreviousScene = null;
+tutorialScene.cards.push(new Card(0, 0, 256, 480, null, () => { currentScene = tutorialPreviousScene }, () => {setCursor("down.png", -16, -64)} ));
+tutorialScene.cards.push(new Card(555, 0, 300, 480, null, () => { currentScene = tutorialPreviousScene }, () => {setCursor("down.png", -16, -64)} ));
