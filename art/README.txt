@@ -68,6 +68,17 @@ FOLDERS:
 			-8: Buoy Check
 			-9: Heat Check
 			-10: Check Submitted
+	
+	-winscene
+		1 frame
+
+	-losescene
+		1 frame
+
+	-titlescene
+		1 frame
+
+
 >ui
 	-cursorsheet
 		resolution 288x32, 9 sprites, each sprite 32x32

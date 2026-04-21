@@ -24,6 +24,8 @@ const missilelaunch = new Audio("./sound/missilelaunch.mp3");
 const radarscreenclicking = new Audio("./sound/radarscreenclicking.mp3");
 const successhit = new Audio("./sound/sucesshit.mp3");
 
+const hitbymissile = new Audio("./sound/hitbymissile.mp3");
+
 const numpads = [
     new Audio("./sound/numpad1bruh.mp3"),
     new Audio("./sound/numpad2bruv.mp3"),
@@ -47,6 +49,7 @@ export {
     missilelaunch,
     radarscreenclicking,
     successhit,
+    hitbymissile,
 
     numpads
 }

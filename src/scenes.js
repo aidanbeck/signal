@@ -16,6 +16,7 @@ import {
     missilelaunch,
     radarscreenclicking,
     successhit,
+    hitbymissile,
 
     numpads
 } from './audio.js';
@@ -316,7 +317,23 @@ function launch() {
 
     let x = Number(launchCode.slice(0, 2));
     let y = Number(launchCode.slice(2, 4));
-    launchMissile(x, y);
+    let hits = launchMissile(x, y);
+
+    if (!hits) {
+        mapScene.frame++;
+        if (mapScene.frame == 3) {
+            mapScene.frame = 2;
+            let newSound = hitbymissile.cloneNode(); // !!! unoptomized
+            newSound.volume = 0.05;
+            newSound.play();
+            currentScene = loseScene;
+        }
+    }
+
+    if (hits) {
+        currentScene = winScene;
+    }
+
     launchCode = "";
 
     let newSound = launchbutton.cloneNode(); // !!! unoptomized
@@ -466,3 +483,14 @@ SCENES.push(tutorialScene);
 let tutorialPreviousScene = null;
 tutorialScene.cards.push(new Card(0, 0, 256, 480, null, () => { currentScene = tutorialPreviousScene }, () => {setCursor("down.png", -16, -64)} ));
 tutorialScene.cards.push(new Card(555, 0, 300, 480, null, () => { currentScene = tutorialPreviousScene }, () => {setCursor("down.png", -16, -64)} ));
+
+
+const winScene = new Scene("./art/environment/winscene.png", 854);
+winScene.cards.push(new Card(0, 0, 854, 480, null, () => { window.location.reload(); }, () => {setCursor("hand_hover.png", -16, -64)}));
+
+const loseScene = new Scene("./art/environment/losescene.png", 854);
+loseScene.cards.push(new Card(0, 0, 854, 480, null, () => { window.location.reload(); }, () => {setCursor("hand_hover.png", -16, -64)}));
+
+const titleScene = new Scene("./art/environment/titlescene.png", 854);
+titleScene.cards.push(new Card(0, 0, 854, 480, null, () => { currentScene = mainScene }));
+currentScene = titleScene;

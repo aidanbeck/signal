@@ -103,6 +103,7 @@ function launchMissile(x, y) {
     newSound.currentTime = -2;
     // newSound.volume = 0.05;
     newSound.play();
+    return true;
   } else {
     setAbilityVisual({ type: "miss", text: "You missed."});
 
@@ -110,6 +111,7 @@ function launchMissile(x, y) {
     newSound.currentTime = -5;
     // newSound.volume = 0.05;
     newSound.play();
+    return false;
   }
 
 }
