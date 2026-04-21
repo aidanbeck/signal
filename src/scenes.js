@@ -181,6 +181,28 @@ mainScene.cards.push(new Card(0, 360, 68, 54, null, () => {
 
 
 
+let eligableAbilities = [
+    true,
+    true,
+    true,
+    true,
+    true,
+    true,
+    false,
+    true,
+    false,
+]
+
+function resetAbilities() {
+    for (let i = 0; i < eligableAbilities.length; i++) {
+        eligableAbilities[i] = true;
+    }
+
+    eligableAbilities[6] = false;
+    eligableAbilities[8] = false;
+}
+
+
 // ABILITY CONSOLE SCENE
 const abilityConsoleScene = new Scene("./art/environment/abilityconsolescene.png", 854);
 SCENES.push(abilityConsoleScene);
@@ -197,7 +219,25 @@ abilityConsoleScene.cards.push(abilityOverlayCard);
 abilityConsoleScene.cards.push(new Card(240, 270, 75, 75, null, () => { // left button
     
     abilityConsoleScene.frame = 1;
-    abilityOverlayCard.frame > 0 && abilityOverlayCard.frame--;
+
+    if (abilityOverlayCard.frame > 0 && abilityOverlayCard.frame != 9) {
+        abilityOverlayCard.frame--;
+    }
+
+    while (eligableAbilities[abilityOverlayCard.frame] == false ) {
+        abilityOverlayCard.frame--;
+
+        if (abilityOverlayCard.frame == -1) {
+
+            for (let i = 0; i < eligableAbilities.length; i++) {
+                if (eligableAbilities[i] == true) {
+                    abilityOverlayCard.frame = i;
+                    break;
+                }
+            }
+            
+        }
+    }
 
     let newSound = abilityConsoleClick.cloneNode(); // !!! unoptomized
     newSound.volume = 0.05;
@@ -212,27 +252,35 @@ abilityConsoleScene.cards.push(new Card(323, 270, 100, 75, null, () => { // ente
     switch (abilityOverlayCard.frame) {
         case 0:
             longitudeAbility();
+            eligableAbilities[abilityOverlayCard.frame] = false;
+            
             break;
         case 1:
             latitudeAbility();
+            eligableAbilities[abilityOverlayCard.frame] = false;
             break;
         case 2:
             radius2kAbility();
+            eligableAbilities[abilityOverlayCard.frame] = false;
             break;
         case 3: 
             radius4kAbility();
+            eligableAbilities[abilityOverlayCard.frame] = false;
             break;
         case 4:
             radius8kAbility();
+            eligableAbilities[abilityOverlayCard.frame] = false;
             break;
         case 5:
             distanceAbility();
+            eligableAbilities[abilityOverlayCard.frame] = false;
             break;
         case 6:
             /* intersect */
             break;
         case 7:
             bouyAbility();
+            eligableAbilities[abilityOverlayCard.frame] = false;
             break;
         case 8:
             /* heat */
@@ -252,7 +300,29 @@ abilityConsoleScene.cards.push(new Card(323, 270, 100, 75, null, () => { // ente
 abilityConsoleScene.cards.push(new Card(430, 270, 75, 75, null, () => { // right button
     
     abilityConsoleScene.frame = 3;
-    abilityOverlayCard.frame < 8 && abilityOverlayCard.frame++;
+
+    if (abilityOverlayCard.frame == 9) {
+        abilityOverlayCard.frame = -1;
+    }
+
+    if (abilityOverlayCard.frame < 7) {
+        abilityOverlayCard.frame++;
+    }
+
+    while (eligableAbilities[abilityOverlayCard.frame] == false ) {
+        abilityOverlayCard.frame++;
+
+        if (abilityOverlayCard.frame == 9) {
+
+            for (let i = eligableAbilities.length - 1; i > 0; i--) {
+                if (eligableAbilities[i] == true) {
+                    abilityOverlayCard.frame = i;
+                    break;
+                }
+            }
+            
+        }
+    }
 
     let newSound = abilityConsoleClick.cloneNode(); // !!! unoptomized
     newSound.volume = 0.05;
@@ -314,6 +384,8 @@ launchScene.cards.push(launchCodeOverlayCard);
 
 function launch() {
     launchScene.frame = 12;
+
+    resetAbilities();
 
     let x = Number(launchCode.slice(0, 2));
     let y = Number(launchCode.slice(2, 4));
