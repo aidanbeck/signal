@@ -564,5 +564,11 @@ const loseScene = new Scene("./art/environment/losescene.png", 854);
 loseScene.cards.push(new Card(0, 0, 854, 480, null, () => { window.location.reload(); }, () => {setCursor("hand_hover.png", -16, -64)}));
 
 const titleScene = new Scene("./art/environment/titlescene.png", 854);
-titleScene.cards.push(new Card(0, 0, 854, 480, null, () => { currentScene = mainScene }));
+titleScene.cards.push(new Card(0, 0, 854, 480, null, () => {
+    currentScene = mainScene;
+    let newMoveSound = move.cloneNode(); // !!! unoptomized
+    newMoveSound.currentTime = 0.3;
+    newMoveSound.volume = 0.05;
+    newMoveSound.play();
+}, () => {setCursor("hand_hover.png", -16, -64)}));
 currentScene = titleScene;
