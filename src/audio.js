@@ -18,6 +18,7 @@ notif.volume = 0.6;
 const abilityConsoleClick = new Audio("./sound/abilityConsoleClick.mp3");
 const acceptStatus = new Audio("./sound/acceptStatus.mp3");
 const drawing = new Audio("./sound/drawing.mp3");
+const erasing = new Audio("./sound/erasing.mp3");
 const launchbutton = new Audio("./sound/launchbutton.mp3");
 const miss = new Audio("./sound/miss.mp3");
 const missilelaunch = new Audio("./sound/missilelaunch.mp3");
@@ -44,6 +45,7 @@ export {
     abilityConsoleClick,
     acceptStatus,
     drawing,
+    erasing,
     launchbutton,
     miss,
     missilelaunch,

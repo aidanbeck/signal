@@ -11,6 +11,7 @@ import {
     abilityConsoleClick,
     acceptStatus,
     drawing,
+    erasing,
     launchbutton,
     miss,
     missilelaunch,
@@ -478,6 +479,9 @@ function mapClick(ctx) {
 
 let drawingSound = drawing.cloneNode();
 drawingSound.loop = true;
+
+let erasingSound = erasing.cloneNode();
+erasingSound.loop = true;
 function mapHover(x, y, ctx) {
 
     setCursor("pencil.png", -16, -64);
@@ -490,43 +494,53 @@ function mapHover(x, y, ctx) {
         newLine = true;
 
         drawingSound.pause();
+        erasingSound.pause();
         return;
     }
-    drawingSound.play();
+    
 
-    // if (!leftClick) {
+    if (!leftClick) {
+        drawingSound.pause();
+        erasingSound.play();
+        setCursor("eraser.png", -16, -64);
 
-    //     let eraser = new Circle(x, y, 10);
+        let eraser = new Circle(x, y, 10);
 
-    //     let erasedAny = false;
-    //     let erasedPrevious = false;
-    //     for (let i = 0; i < lineSegments.length; i++) {
+        for (let i = 0; i < lineSegments.length; i++) {
             
-    //         if (erasedPrevious) {
-    //             lineSegments[i].newLine = true;
-    //             erasedPrevious = false;
-    //         }
+            // if (erasedPrevious) {
+            //     lineSegments[i].newLine = true;
+            //     erasedPrevious = false;
+            // }
 
-    //         let point = new Point(lineSegments[i].x, lineSegments[i].y);
+            let point = new Point(lineSegments[i].x, lineSegments[i].y);
 
-    //         if (eraser.overlaps(point)) {
-    //             lineSegments.splice(i, 1);
-    //             erasedPrevious = true;
-    //             erasedAny = true;
-    //         }
-    //     }
+            if (eraser.overlaps(point)) {
+                lineSegments[i].newLine = true;
+            }
+        }
 
-    //     mapRender(ctx);
-    //     return;
-    // }
+        ctx.lineTo(x, y);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(x, y);
 
-    ctx.lineTo(x, y);
-    ctx.stroke();
-    ctx.beginPath();
-    ctx.moveTo(x, y);
+        // lineSegments.push({x, y, newLine: false});
+        newLine = false;
+    } else {
 
-    lineSegments.push({x, y, newLine});
-    newLine = false;
+        drawingSound.play();
+        erasingSound.pause();
+        ctx.lineTo(x, y);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(x, y);
+
+        lineSegments.push({x, y, newLine});
+        newLine = false;
+    }
+
+
 
 }
 
