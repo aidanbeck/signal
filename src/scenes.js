@@ -563,7 +563,7 @@ drawMapScene.cards.push(new Card(700, 0, 154, 480, null, () => { currentScene = 
 
 
 // TUTORIAL SCENE
-const tutorialScene = new Scene("./art/environment/tutorialScene.png", 854);
+const tutorialScene = new Scene("./art/environment/tutorialscene.png", 854);
 SCENES.push(tutorialScene);
 
 let tutorialPreviousScene = null;
